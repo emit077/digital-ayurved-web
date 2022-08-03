@@ -2,8 +2,8 @@ export const namespaced = true
 
 export const state = {
   text: "",
-  color: 'red',
-  flag: true,
+  color: '',
+  flag: false,
 }
 
 export const mutations = {
@@ -21,7 +21,7 @@ export const actions = {
   },
 }
 export const getters = {
-  getSnakbar: state => {
+  getSnackbar: state => {
     return state;
   },
 }

@@ -2,21 +2,34 @@ export const namespaced = true
 // import keys from "@/helper/keys"
 
 export const state = {
-  drawer: false,
-  primary_drawer: true,
+  flag: true,
   items: [
     {
       title: "Overview",
       url: {name: 'overview'},
-      // src_active: require('@/assets/images/customer-active.svg'),
       is_active_tab: false,
+      icon: "mdi-home"
       // access_by: [keys.ACCOUNT_ADMIN, keys.ACCOUNT_SUPER_ADMIN],
     },
     {
-      title: "Profile",
-      url: {name: 'student_profile'},
-      // src_active: require('@/assets/images/customer-active.svg'),
+      title: "Doctors",
+      url: {name: 'doctor_list'},
       is_active_tab: false,
+      icon: "mdi-stethoscope"
+      // access_by: [keys.ACCOUNT_STUDENT],
+    },
+    {
+      title: "Patients",
+      url: {name: 'patients_list'},
+      is_active_tab: false,
+      icon: "mdi-human-cane",
+      // access_by: [keys.ACCOUNT_STUDENT],
+    },
+    {
+      title: "Drugs",
+      url: {name: 'drug_list'},
+      is_active_tab: false,
+      icon: "mdi-bottle-tonic-plus",
       // access_by: [keys.ACCOUNT_STUDENT],
     },
   ],
@@ -30,8 +43,8 @@ export const mutations = {
       state.items[i].is_active_tab = false;
     }
   },
-  SET_PRIMARY_DRAWER(state, value) {
-    state.primary_drawer = value;
+  SET_FLAG(state, value) {
+    state.flag = value;
   },
 
 }
@@ -40,15 +53,15 @@ export const actions = {
   setActiveTab({commit}, index) {
     commit('SET_ACTIVE_TAB', index)
   },
-  setPrimaryDrawer({commit}, value) {
-    commit('SET_PRIMARY_DRAWER', value)
+  setFlag({commit}, value) {
+    commit('SET_FLAG', value)
   },
 }
 export const getters = {
   getDrawerItems: state => {
     return state.items;
   },
-  getManageTab: state => {
-    return state.items[9];
+  getFlag: state => {
+    return state.flag;
   },
 }
