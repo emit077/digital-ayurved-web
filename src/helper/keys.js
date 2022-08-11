@@ -66,10 +66,6 @@ const keys = {
   MAX_FILE_SIZE: 4,
   ACCEPTED_IMAGE_FORMATE: ['image/jpeg', 'image/png', 'image/jpg'],
 
-  // medx
-  GOOGLE_PLACES_API_KEY: "AIzaSyDK-L_2b2D7o9NQcpN7iRrSv7o4UXv1P0M",
-
-  // AIzaSyB2LTMhbsrjR6lCpk3MTNQs1Y3F4t262Dc
 
 
   GENDER_OPTIONS: ['Male', 'Female', 'Other']
