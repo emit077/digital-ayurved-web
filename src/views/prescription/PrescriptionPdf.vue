@@ -1,128 +1,134 @@
 <template>
-  <div style="padding: 20px">
-    <v-btn @click="printPage">Print</v-btn>
-    <table style="width:100%">
-      <tr>
-        <td class="text-center" colspan="2">
-          <h1>{{ org_name }}</h1>
-          <p>{{ address }}</p>
-        </td>
-      </tr>
-      <!-- doctor -->
-      <tr>
-        <td>
-          <p>Name:</p>
-          <p>{{ degree }}</p>
-        </td>
-        <td>
-          <p>{{ contact_number }}</p>
-        </td>
-      </tr>
-      <!-- patient -->
-    </table>
-    <table style="width:100%">
-      <tr>
-        <td>
-          <p>Name</p>
-          <p>{{ patient_name }}</p>
-        </td>
-        <td>
-          <p>Age</p>
-          <p>{{ patient_age }}</p>
-        </td>
-        <td>
-          <p>Sex</p>
-          <p>{{ patient_gender }}</p>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <p>Contact number</p>
-          <p>{{ patient_contact }}</p>
-        </td>
-        <td>
-          <p>Occupation</p>
-          <p>{{ patient_occupation }}</p>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <p>Address</p>
-          <p>{{ patient_address }}</p>
-        </td>
-      </tr>
-    </table>
+  <v-btn @click="generateReport">Print</v-btn>
+
+  <!--  <vue3-html2pdf-->
+  <!--      :show-layout="false"-->
+  <!--      :float-layout="true"-->
+  <!--      :enable-download="true"-->
+  <!--      :preview-modal="true"-->
+  <!--      :paginate-elements-by-height="1400"-->
+  <!--      filename="hee hee"-->
+  <!--      :pdf-quality="2"-->
+  <!--      :manual-pagination="false"-->
+  <!--      pdf-format="a4"-->
+  <!--      pdf-orientation="portrait"-->
+
+  <!--      @progress="onProgress($event)"-->
+  <!--      @hasStartedGeneration="hasStartedGeneration()"-->
+  <!--      @hasGenerated="hasGenerated($event)"-->
+  <!--      ref="html2Pdf"-->
+  <!--  >-->
+  <!--   <template  v-slot:pdf-content>-->
+  <div style="padding: 30px">
+    <div class="text-center mb-3">
+      <h1>{{ org_name }}</h1>
+      <p>{{ address }}</p>
+    </div>
+    <!--    <hr>-->
+    <!-- doctor -->
+    <div class="text-right label">
+      <span class="float-left">{{ date }}</span>
+      Dr. {{ doctor_name }} ({{ degree }})
+    </div>
+    <!-- patient -->
     <hr>
     <div>
-      <div style="display: inline-block; width: 25%;padding-right: 15px;">
-        <table style="width:100%; vertical-align: top">
-          <tr>
-            <td>BP:</td>
-            <td>-</td>
-            <td>{{ bp }}</td>
-          </tr>
-          <tr>
-            <td>Pulse</td>
-            <td>-</td>
-            <td> {{ pulse }}</td>
-          </tr>
-          <tr>
-            <td>Temp</td>
-            <td>-</td>
-            <td>{{ temperature }}</td>
-          </tr>
-          <tr>
-            <td>B Sugar</td>
-            <td>-</td>
-            <td>{{ blood_sugar }}</td>
-          </tr>
-          <tr>
-            <td>Weight</td>
-            <td>-</td>
-            <td>{{ weight }}</td>
-          </tr>
-          <tr>
-            <td>Advise:</td>
-          </tr>
-          <tr>
-            <td>{{ advise }}</td>
-          </tr>
-        </table>
-
+      <b>Patient Details</b>: <br>
+      <!--      <b>Patient ID: </b> {{ patient_id }},-->
+      <span class="label">Name: </span> {{ patient_name }},
+      <span class="label">Age: </span>{{ patient_age }}Y,
+      <span class="label">Sex: </span>{{ patient_gender }},
+      <span class="label">Contact number: </span>{{ patient_contact }},
+      <span class="label">Address: </span>{{ patient_address }},
+    </div>
+    <hr>
+    <div>
+      <div>
+        <span class="label">Pulse: </span>{{ pulse }} |
+        <span class="label">BP: </span>{{ bp }} |
+        <span class="label">Temp: </span>{{ temperature }} |
+        <span class="label">Sugar: </span>{{ blood_sugar }} |
+        <span class="label">Weight: </span>{{ weight }}
       </div>
-      <div
-          style="display: inline-block; width: 74%; vertical-align: top; padding-left: 15px; border-left: solid 1px lightgrey; height: 100%">
-        <table style="width:100%">
-          <tr>
-            <td>
-              <p>Main Complain</p>
-              <p>{{ main_complain }}</p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <p>History of Complain</p>
-              <p>{{ history_of_complain }}</p>
-            </td>
-          </tr>
-        </table>
+      <div>
+        <p><span class="label">Main Complain: </span> {{ main_complain }}</p>
+        <p><span class="label">History of Complain: </span>{{ history_of_complain }}</p>
+        <p><span class="label">Advise: </span>{{ advise }}</p>
       </div>
     </div>
-
+    <hr>
+    <div>
+      <h2>Rx:</h2>
+      <table class="prescription-table" style="width: 100%; text-align: left">
+        <tr>
+          <th style="width: 35%">Name</th>
+          <th style="width: 15%">Dose</th>
+          <th style="width: 20%">Frequency</th>
+          <th style="width: 30%">Instruction</th>
+        </tr>
+        <tr>
+          <td>Ahajshas</td>
+          <td> 1 goli</td>
+          <td> shubeh sham</td>
+          <td> pata ni</td>
+        </tr>
+        <tr>
+          <td>Ahajshas</td>
+          <td> 1 goli</td>
+          <td> shubeh sham</td>
+          <td> pata ni</td>
+        </tr>
+      </table>
+    </div>
   </div>
+  <!--    </template>-->
+  <!--  </vue3-html2pdf>-->
 </template>
+<style>
+hr {
+  border: 0.5px solid lightgrey;
+  margin: 10px 0px;
+}
+
+.label {
+  font-weight: bold;
+  color: #575656;
+}
+
+table,
+table tr,
+table th,
+table td {
+  border-collapse: collapse;
+  padding: 8px;
+}
+
+.prescription-table th {
+  background-color: #eee;
+  color: #575656;
+}
+
+.prescription-table tr:nth-child(odd) {
+  background-color: #eeeeee80;
+}
+</style>
 
 <script>
+// import Vue3Html2pdf from 'vue3-html2pdf'
 
 export default {
-  components: {},
+  components: {
+    // Vue3Html2pdf
+  },
   data: () => ({
     org_name: "ओम आयुर्वेद एर्वं योग केन्द्र",
     address: "pool road Shivrinarayan",
+    date: new Date(),
     doctor_name: "Om vijay Sahu",
     degree: "BAMS",
     contact_number: "900000000",
 
+    patient_id: "12333",
     patient_name: "Amit kumar Sahu",
     patient_age: "23",
     patient_gender: "Male",
@@ -135,12 +141,17 @@ export default {
     temperature: "90",
     blood_sugar: "123",
     weight: "312",
-    advise: "drink boiled water",
+    main_complain: "312",
+    history_of_complain: "312",
+    advise: "drink boiled Water",
   }),
   methods: {
     printPage() {
       print();
       // newWin.close();
+    },
+    generateReport() {
+      this.$refs.html2Pdf.generatePdf()
     }
   }
 }

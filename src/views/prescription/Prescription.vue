@@ -4,10 +4,9 @@
       <v-row no-gutters>
         <v-col cols="12" md="5" class="py-2" :class="!$vuetify.display.mobile?'px-4':''">
           <label class="ml-1">{{ $lang.PATIENT }}</label>
-
-          <v-autocomplete
-              v-model="patient"
-              :items="patient_list"
+          <v-combobox
+              v-model="drug"
+              :items="drug_list"
               filled
               chips
               closable-chips
@@ -32,7 +31,7 @@
                   :subtitle="item.raw.mobile"
               ></v-list-item>
             </template>
-          </v-autocomplete>
+          </v-combobox>
         </v-col>
       </v-row>
       <v-row no-gutters>
@@ -200,6 +199,88 @@
           </v-textarea>
         </v-col>
       </v-row>
+      <!--   prescription   -->
+      <v-row v-for="(item, i) in prescription_list" :key="i" justify="start" no-gutters="" class="mt-2">
+        <v-col class="py-2" cols="10" md="4" :class="!$vuetify.display.mobile?'px-4':''">
+          <label class="ml-1">{{ $lang.DRUG }}</label>
+          <v-combobox
+              v-model="drug"
+              v-model:search-input="item.drug_search_query"
+              :items="drug_list"
+              filled
+              chips
+              closable-chips
+              label="Select"
+              item-title="name"
+              item-value="name"
+              variant="outlined"
+              density="compact"
+          >
+            <template v-slot:chip="{ props, item }">
+              <v-chip
+                  v-bind="props"
+                  :text="item.raw.name"
+              ></v-chip>
+            </template>
+            <template v-slot:item="{ props, item }">
+              <v-list-item v-if="typeof item.raw !== 'object'" v-bind="props"></v-list-item>
+              <v-list-item
+                  v-else
+                  v-bind="props"
+                  :prepend-avatar="item.raw.avatar"
+                  :title="item.raw.name"
+                  :subtitle="item.raw.mobile"
+              ></v-list-item>
+            </template>
+          </v-combobox>
+        </v-col>
+        <v-col class="py-2" cols="10" md="2" :class="!$vuetify.display.mobile?'px-4':''">
+          <label class="ml-1">{{ $lang.DOSE }}</label>
+          <v-select
+              v-model="item.dose"
+              :items="['Male','Female','Transgender','Intersex','Non-Conforming','Other']"
+              :label="$lang.DOSE"
+              variant="outlined"
+              single-line
+              class="mt-1"
+              :rules="[$rules.REQUIRED_FIELD('')]"
+              density="compact"
+              hide-details
+          >
+          </v-select>
+        </v-col>
+        <v-col class="py-2" cols="10" md="2" :class="!$vuetify.display.mobile?'px-4':''">
+          <label class="ml-1">{{ $lang.FREQUENCY }}</label>
+          <v-select
+              v-model="item.frequency"
+              :items="['Male','Female','Transgender','Intersex','Non-Conforming','Other']"
+              :label="$lang.FREQUENCY"
+              variant="outlined"
+              single-line
+              class="mt-1"
+              :rules="[$rules.REQUIRED_FIELD('')]"
+              density="compact"
+              hide-details
+          >
+          </v-select>
+        </v-col>
+        <v-col class="py-2" cols="10" md="2" :class="!$vuetify.display.mobile?'px-4':''">
+          <label class="ml-1">{{ $lang.INSTRUCTION }}</label>
+          <v-select
+              v-model="item.instruction"
+              :items="['Male','Female','Transgender','Intersex','Non-Conforming','Other']"
+              :label="$lang.INSTRUCTION"
+              variant="outlined"
+              single-line
+              class="mt-1"
+              :rules="[$rules.REQUIRED_FIELD('')]"
+              density="compact"
+              hide-details
+          >
+          </v-select>
+        </v-col>
+      </v-row>
+
       <v-col cols="12" md="10">
         <div class="mt-4">
           <v-btn :loading="btn_loading" block class="register-action-btn" color="primary"
@@ -236,6 +317,21 @@ export default defineComponent({
 
     patient: null,
     patient_list: [],
+    drug_list: [],
+    prescription_list: [
+      {
+        drug_search_query: '',
+        loading: false,
+
+        drug: null,
+        dose: null,
+        frequency: null,
+        instruction: null,
+        qty: null,
+
+
+      }
+    ]
   }),
   mounted() {
     this.getPatientList()

@@ -38,6 +38,12 @@ export default {
   REQUIRED_TEST: "Required Test",
   ADVISE: "Advise",
 
+  DRUG:"Drug",
+  QTY:"Qty",
+  DOSE:"Dose",
+  FREQUENCY:"Frequency",
+  INSTRUCTION:"Instruction",
+
 
   /* search place holders */
   DOCTOR_SEARCH: "Search by Doctor Name, Mobile, Email, Medical Reg number",
