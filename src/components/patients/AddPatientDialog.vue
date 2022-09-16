@@ -160,22 +160,23 @@
               </div>
             </v-col>
           </v-row>
-          <v-col cols="12" md="12" class="text-center">
-            <v-btn :loading="btn_loading" class="mr-3" color="primary" height="50px" width="120" type="submit">
-              <span class="btn_text">{{ $lang.SAVE }}</span>
-            </v-btn>
-
-            <v-btn color="primary" class="ml-3" variant="outlined" height="50px" width="120" @click="flag=false">
-              Cancel
-            </v-btn>
-          </v-col>
+          <!--  Action Btn    -->
+          <v-row no-gutters class="mt-7">
+            <v-col cols="12" md="12" class="text-center">
+              <v-btn :loading="btn_loading" class="register-action-btn mx-2" color="primary"
+                     height="50px" width="300px" type="submit">
+                <span class="btn_text">{{ $lang.SAVE }}</span>
+              </v-btn>
+              <v-btn :loading="btn_loading" class="register-action-btn mx-2" color="primary"
+                     height="50px" width="300px" variant="outlined" @click="flag=false">
+                <span class="btn_text">{{ $lang.CANCEL }}</span>
+              </v-btn>
+            </v-col>
+          </v-row>
         </v-form>
       </v-card-text>
     </v-card>
   </v-dialog>
-
-  <div class="py-15">
-  </div>
 </template>
 
 <script>

@@ -59,10 +59,11 @@
   </div>
 </template>
 <style>
-.prescription-pdf-temp{
+.prescription-pdf-temp {
   font-weight: normal;
   font-size: 13px;
 }
+
 hr {
   border: 0.5px solid lightgrey;
   margin: 10px 0px;
@@ -124,12 +125,13 @@ export default {
     prescription_list: []
   }),
   created() {
-    this.getTreatmentDetails()
+    if (this.$route.params.id)
+      this.getTreatmentDetails(this.$route.params.id)
   },
   methods: {
-    getTreatmentDetails() {
+    getTreatmentDetails(id) {
       var params = {
-        "treatment_table_id": 13,
+        "treatment_table_id": id,
       }
       const successHandler = (response) => {
         this.doctor_name = response.data.doctor_name;

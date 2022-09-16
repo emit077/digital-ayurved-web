@@ -171,20 +171,20 @@
             </v-text-field>
           </div>
         </v-col>
-        <v-col cols="12" md="5" :class="!$vuetify.display.mobile?'px-4':''">
-
-
-        </v-col>
       </v-row>
-      <v-col cols="12" md="10">
-        <div class="mt-4">
-          <v-btn :loading="btn_loading" block class="register-action-btn" color="primary"
-                 height="50px"
-                 type="submit">
+      <!--  Action Btn    -->
+      <v-row no-gutters>
+        <v-col cols="12" md="10" class="text-center">
+          <v-btn :loading="btn_loading" class="register-action-btn mx-2" color="primary"
+                 height="50px" width="300px" type="submit">
             <span class="btn_text">{{ $lang.SAVE }}</span>
           </v-btn>
-        </div>
-      </v-col>
+          <v-btn :loading="btn_loading" class="register-action-btn mx-2" color="primary"
+                 height="50px" width="300px" variant="outlined" @click="$router.go(-1)">
+            <span class="btn_text">{{ $lang.CANCEL }}</span>
+          </v-btn>
+        </v-col>
+      </v-row>
     </v-form>
   </div>
 </template>

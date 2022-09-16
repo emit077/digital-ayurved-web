@@ -314,14 +314,20 @@
           </v-col>
         </v-row>
       </div>
-      <v-col cols="12" md="10">
-        <div class="mt-4 text-center">
-          <v-btn :loading="btn_loading" class="register-action-btn" color="primary" height="50px" width="300px"
-                 type="submit">
+      <!--  Action Btn    -->
+      <v-row no-gutters class="mt-7">
+        <v-col cols="12" md="12" class="text-center">
+          <v-btn :loading="btn_loading" class="register-action-btn mx-2" color="primary"
+                 height="50px" width="300px" type="submit">
             <span class="btn_text">{{ $lang.SAVE }}</span>
           </v-btn>
-        </div>
-      </v-col>
+          <v-btn :loading="btn_loading" class="register-action-btn mx-2" color="primary"
+                 height="50px" width="300px" variant="outlined" @click="$router.go(-1)">
+            <span class="btn_text">{{ $lang.CANCEL }}</span>
+          </v-btn>
+        </v-col>
+      </v-row>
+
     </v-form>
     <add-patient-dialog ref="patient_dialog"/>
   </div>
@@ -462,7 +468,10 @@ export default defineComponent({
         this.$refs.prescription_form.reset()
         this.showSnakeBar('success', this.doctor_table_id ? "Profile Updated" : "Doctor Added")
         // open prescription pdf in new tab
-        let routeData = this.$router.resolve({name: 'prescription_preview', params: {id: "1"}});
+        let routeData = this.$router.resolve({
+          name: 'prescription_preview',
+          params: {id: response.data.treatment_table_id}
+        });
         window.open(routeData.href, '_blank');
       };
       const finallyHandler = () => {
@@ -470,6 +479,7 @@ export default defineComponent({
       };
       this.request_POST(this, this.$urls.ADD_PRESCRIPTION, form, successHandler, null, null, finallyHandler)
     },
+    // restrict the char input
     restrictChar(event) {
       let digitPeriodRegExp = new RegExp('\\d|\\.');
       if (event.ctrlKey // (A)

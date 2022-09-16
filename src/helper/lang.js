@@ -10,6 +10,7 @@ export default {
   CONTINUE: "Continue",
   LOGOUT: "Logout",
   SAVE: "Save",
+  CANCEL: "Cancel",
 
   ADD_NEW: "Add New",
   EDIT: "Edit",
