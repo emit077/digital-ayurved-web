@@ -2,11 +2,11 @@
   <!-- App.vue -->
   <!--  <v-app>-->
   <!-- drawer -->
-  <navigation-drawer/>
+  <navigation-drawer />
   <!-- nav -->
   <app-bar/>
   <!-- Sizes your content based upon application components -->
-  <v-main>
+  <v-main class="bg-style">
     <!-- Provides the application the proper gutter -->
     <v-container fluid>
       <!-- If using vue-router -->
@@ -15,7 +15,11 @@
   </v-main>
   <!--  </v-app>-->
 </template>
-
+<style scoped lang="scss">
+.bg-style {
+  background-color: rgb(250, 251, 253);
+}
+</style>
 <script>
 import AppBar from "@/components/dashboard-layout/AppBar.vue"
 import NavigationDrawer from "@/components/dashboard-layout/NavigationDrawer.vue"

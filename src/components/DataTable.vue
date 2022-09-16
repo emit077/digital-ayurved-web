@@ -4,20 +4,24 @@ tbody tr td {
   padding: 7px 10px !important;
 }
 
+th{
+  background-color: #3e3e3e;
+  color: white;
+}
 
 thead tr th:first-child {
-  border-top-left-radius: 20px;
+  border-top-left-radius: 5px;
 }
 
 thead tr th:last-child {
-  border-top-right-radius: 20px;
+  border-top-right-radius: 5px;
 }
 </style>
 <template>
   <v-table>
     <thead>
     <tr>
-      <th v-for="(header,i) in headers" class="text-subtitle-2 bg-primary" :key="i">
+      <th v-for="(header,i) in headers" class="text-subtitle-2" :key="i">
         {{ header.title }}
       </th>
     </tr>

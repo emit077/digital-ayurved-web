@@ -1,23 +1,27 @@
 <template>
   <div>
-    <div class="text-right mb-5 ">
-      <router-link :to="{ name: 'add_drug'}">
-        <v-btn color="primary" prepend-icon="mdi-plus">{{ $lang.ADD_NEW }}</v-btn>
-      </router-link>
-    </div>
-    <v-row class="mb-2">
-      <v-col cols="12" md="6" xl="4">
+    <!--  search  console   -->
+    <v-row class="mb-2" justify="space-between">
+      <v-col cols="12" md="2">
+        <router-link :to="{ name: 'add_drug'}">
+          <v-btn color="primary" prepend-icon="mdi-plus">{{ $lang.ADD_NEW }}</v-btn>
+        </router-link>
+      </v-col>
+      <v-col cols="12" md="5">
         <v-text-field
             v-model="search_query"
             :placeholder="$lang.DRUG_SEARCH"
             prepend-inner-icon="mdi-magnify"
             hide-details
             single-line
-            density="comfortable"
+            variant="outlined"
             @keyup="getDrugList"
+            density="compact"
         ></v-text-field>
       </v-col>
     </v-row>
+
+    <!--    -->
     <div>
       <data-table :items="drug_list" :headers="headers"/>
       <v-divider/>
@@ -53,7 +57,7 @@ export default defineComponent({
       {title: "MRP", value: "mrp"},
       {
         title: "", type: "btn", class: "text-right", btn_list: [
-          {btn_icon: "mdi-pencil", route_name: '/drug/edit/', router_key: "drug_table_id", color: 'primary'},
+          {btn_icon: "mdi-pencil", route_name: '/drugs/edit/', router_key: "drug_table_id", color: 'primary'},
           // {
           //   btn_icon: "mdi-chevron-right",
           //   route_name: '/drug/details/',

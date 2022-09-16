@@ -1,16 +1,30 @@
 <template>
   <div>
     <v-row class="mb-2">
-      <v-col cols="12" md="6" xl="4">
-        <router-link :to="{ name: 'prescription'}">
-          <v-btn color="primary">
-            New Prescription
-          </v-btn>
+      <v-col cols="12" md="3" xl="4" class="overview-card">
+        <router-link :to="{ name: 'prescription'}" class="router-text-decoration">
+          <div class="border h-100 d-flex align-center justify-center">
+            <div class="text-center">
+              <v-icon > mdi-plus</v-icon>
+              <p>New Prescription</p>
+            </div>
+          </div>
         </router-link>
       </v-col>
     </v-row>
   </div>
 </template>
+
+<style>
+.overview-card {
+  height: 200px;
+  text-decoration: none !important;
+  color: rgb(var(--v-theme-primary));
+}
+.overview-card :hover{
+  background-color: rgb(var(--v-theme-primary),0.1);
+}
+</style>
 
 <script>
 import {defineComponent} from 'vue';

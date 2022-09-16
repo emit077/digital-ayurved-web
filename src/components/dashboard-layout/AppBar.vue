@@ -22,13 +22,7 @@
 }
 </style>
 <template>
-  <v-app-bar
-      app
-      elevate-on-scroll
-      class="px-2"
-  >
-    <!--      scroll-target="#scrolling-techniques-7"-->
-
+  <v-app-bar app color="rgb(250, 251, 253)" class="elevation-0">
     <div class="btn-box">
       <v-btn color="primary" size="35" icon="" text depressed fab class="pa-0" v-if="$route.meta.show_back_btn"
              @click="$router.go(-1)">

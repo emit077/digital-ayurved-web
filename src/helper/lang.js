@@ -15,11 +15,16 @@ export default {
   EDIT: "Edit",
   EDIT_PROFILE: "Edit Profile",
 
+  FIRST_NAME: "First Name",
+  LAST_NAME: "Last Name",
   NAME: "Name",
+
   EMAIL: "Email",
   DOB: "Date of Birth",
   GENDER: "Gender",
+  AGE: "Age",
   DEGREE: "Degree",
+  OCCUPATION: "Occupation",
   DESIGNATION: "Designation",
   MEDICAL_REG_NUMBER: "Medical Registration Number",
   ADDRESS: "Address",
@@ -38,12 +43,17 @@ export default {
   REQUIRED_TEST: "Required Test",
   ADVISE: "Advise",
 
-  DRUG:"Drug",
-  QTY:"Qty",
-  DOSE:"Dose",
-  FREQUENCY:"Frequency",
-  INSTRUCTION:"Instruction",
+  DRUG: "Drug",
+  QTY: "Qty",
+  DOSE: "Dose",
+  FREQUENCY: "Frequency",
+  INSTRUCTION: "Instruction",
 
+  DRUG_NAME: "Drug Name",
+  FORMULA: "Formula",
+  FORMULATION_TYPE: "Formulation type",
+  DOSE_TYPE: "Dose Type",
+  ANUPAAN: "Anupaan",
 
   /* search place holders */
   DOCTOR_SEARCH: "Search by Doctor Name, Mobile, Email, Medical Reg number",

@@ -1,18 +1,29 @@
 <template>
   <div>
-    <v-row class="mb-2 mt-5">
-      <v-col cols="12" md="6">
+    <!--  search  console   -->
+    <v-row class="mb-2" justify="space-between">
+      <v-col cols="12" md="2">
+        <!--        <router-link :to="{ name: 'add_drug'}">-->
+        <!--          <v-btn color="primary" prepend-icon="mdi-plus">{{ $lang.ADD_NEW }}</v-btn>-->
+        <!--        </router-link>-->
+      </v-col>
+      <v-col cols="12" md="5">
         <v-text-field
             v-model="search_query"
             :placeholder="$lang.PATIENT_SEARCH"
             prepend-inner-icon="mdi-magnify"
             hide-details
             single-line
-            density="comfortable"
+            variant="outlined"
             @keyup="getPatientList"
+            density="compact"
         ></v-text-field>
       </v-col>
     </v-row>
+
+    <!--    -->
+
+
     <div>
       <data-table :items="patient_list" :headers="headers"/>
       <v-divider/>

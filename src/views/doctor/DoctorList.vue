@@ -1,21 +1,21 @@
 <template>
   <div>
-    <div class="text-right mb-5">
-      <router-link :to="{ name: 'add_doctor'}">
-        <v-btn color="primary" prepend-icon="mdi-plus">{{ $lang.ADD_NEW }}</v-btn>
-      </router-link>
-    </div>
-
-    <v-row class="mb-2">
-      <v-col cols="12" md="6">
+    <v-row class="mb-2" justify="space-between">
+      <v-col cols="12" md="2" >
+        <router-link :to="{ name: 'add_doctor'}">
+          <v-btn color="primary" prepend-icon="mdi-plus">{{ $lang.ADD_NEW }}</v-btn>
+        </router-link>
+      </v-col>
+      <v-col cols="12" md="5">
         <v-text-field
             v-model="search_query"
             :placeholder="$lang.DOCTOR_SEARCH"
             prepend-inner-icon="mdi-magnify"
             hide-details
             single-line
-            density="comfortable"
+            variant="outlined"
             @keyup="getDoctorList"
+            density="compact"
         ></v-text-field>
       </v-col>
     </v-row>

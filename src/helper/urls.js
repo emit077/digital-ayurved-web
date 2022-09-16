@@ -22,7 +22,9 @@ export default {
   //patients api
   PATIENT_LIST: "/patient/list/",
   PATIENT_DETAILS: "/patient/details/",
-
+  ADD_PRESCRIPTION: "/patient/add/prescription/",
+  GET_TREATMENT_DETAILS: "/patient/get/treatment-details/",
+  GET_PRESCRIPTION_SUPPORTING_DATA: "/patient/get/prescription-supporting-data/",
 
 }
 

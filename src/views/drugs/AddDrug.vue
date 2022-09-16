@@ -1,70 +1,62 @@
 <template>
   <div>
-    <v-form ref="login_form" lazy-validation @submit.prevent="addDoctor()">
-
+    <v-form ref="add_drug_form" lazy-validation @submit.prevent="addDoctor()">
       <v-row no-gutters>
         <v-col cols="12" md="5" :class="!$vuetify.display.mobile?'px-4':''">
-          <label class="ml-1">{{ $lang.NAME }}</label>
+          <label class="ml-1">{{ $lang.DRUG_NAME }}</label>
           <v-text-field
-              v-model="form.name"
-              :label="$lang.NAME"
+              v-model="form.drug_name"
+              :label="$lang.DRUG_NAME"
               variant="outlined"
               single-line
               class="mt-1"
               shaped
-              :rules="[$rules.REQUIRED_FIELD($lang.NAME)]"
+              :rules="[$rules.REQUIRED_FIELD($lang.DRUG_NAME)]"
               maxlength="50"
               density="compact"
           >
           </v-text-field>
         </v-col>
         <v-col cols="12" md="5" :class="!$vuetify.display.mobile?'px-4':''">
-          <label class="ml-1">{{ $lang.MOBILE_NUMBER }}</label>
+          <label class="ml-1">{{ $lang.FORMULA }}</label>
           <v-text-field
-              v-model="form.mobile"
-              :label="$lang.MOBILE_NUMBER"
+              v-model="form.formula"
+              :label="$lang.FORMULA"
               variant="outlined"
               single-line
               class="mt-1"
               shaped
-              :rules="$rules.MOBILE"
-              maxlength="10"
+              :rules="[$rules.REQUIRED_FIELD($lang.FORMULA)]"
               density="compact"
           >
           </v-text-field>
         </v-col>
         <v-col cols="12" md="5" :class="!$vuetify.display.mobile?'px-4':''">
-          <label class="ml-1">{{ $lang.EMAIL }}</label>
+          <label class="ml-1">{{ $lang.FORMULATION_TYPE }}</label>
           <v-text-field
-              v-model="form.email"
-              :label="$lang.EMAIL"
+              v-model="form.formulation_type"
+              :label="$lang.FORMULATION_TYPE"
               variant="outlined"
               single-line
               class="mt-1"
               shaped
-              :rules="$rules.EMAIL"
-              maxlength="60"
               density="compact"
           >
           </v-text-field>
         </v-col>
-
         <v-col cols="12" md="5" :class="!$vuetify.display.mobile?'px-4':''">
-          <label class="ml-1">{{ $lang.DOB }}</label>
+          <label class="ml-1">{{ $lang.FORMULATION_TYPE }}</label>
           <v-text-field
-              v-model="form.dob"
-              :label="$lang.DOB"
+              v-model="form.formulation_type"
+              :label="$lang.FORMULATION_TYPE"
               variant="outlined"
               single-line
               class="mt-1"
               shaped
-              :rules="[$rules.REQUIRED_FIELD($lang.DOB)]"
               density="compact"
           >
           </v-text-field>
         </v-col>
-
-
         <v-col cols="12" md="5" :class="!$vuetify.display.mobile?'px-4':''">
           <label class="ml-1">{{ $lang.GENDER }}</label>
           <v-select
@@ -81,7 +73,6 @@
           >
           </v-select>
         </v-col>
-
         <v-col cols="12" md="5" :class="!$vuetify.display.mobile?'px-4':''">
           <label class="ml-1">{{ $lang.DEGREE }}</label>
           <v-select
@@ -96,8 +87,6 @@
           >
           </v-select>
         </v-col>
-
-
         <v-col cols="12" md="5" :class="!$vuetify.display.mobile?'px-4':''">
           <label class="ml-1">{{ $lang.ADDRESS }}</label>
           <v-textarea
@@ -157,7 +146,6 @@
         </div>
       </v-col>
     </v-form>
-
   </div>
 </template>
 
@@ -169,17 +157,11 @@ export default defineComponent({
   components: {},
   data: () => ({
     form: {
-      name: "",
+      drug_name: "",
       formula: "",
       formulation_type: "",
       dose_type: "",
       anupaan: "",
-      gender: "",
-      dob: "",
-      designation: "",
-      degree: "",
-      city: "",
-      address: "",
     },
     show_password: false,
     btn_loading: false,

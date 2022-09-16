@@ -8,10 +8,10 @@ const routes = [
     component: () => import(/* webpackChunkName: "login" */ '../views/LoginView.vue')
   },
   {
-    path: '/prescription/pdf',
-    name: 'prescription_pdf',
-    meta: {requiresAuth: true, title: "Login", show_back_btn: false},
-    component: () => import(/* webpackChunkName: "prescription-pdf" */ '../views/prescription/PrescriptionPdf')
+    path: '/prescription_preview/:id',
+    name: 'prescription_preview',
+    meta: {requiresAuth: true, title: "Prescription Preview", show_back_btn: false},
+    component: () => import(/* webpackChunkName: "prescription-pdf" */ '../views/prescription/PrescriptionPreview')
   },
   {
     path: '/dashboard',
@@ -84,13 +84,19 @@ const routes = [
         path: '/drugs',
         name: 'drug_list',
         meta: {requiresAuth: true, title: "Drugs", show_back_btn: false},
-        component: () => import(/* webpackChunkName: "login" */ '../views/drugs/DrugList.vue')
+        component: () => import(/* webpackChunkName: "drug" */ '../views/drugs/DrugList.vue')
       },
       {
         path: '/drugs/add/',
         name: 'add_drug',
         meta: {requiresAuth: true, title: " Add Drugs", show_back_btn: true},
-        component: () => import(/* webpackChunkName: "login" */ '../views/drugs/AddDrug.vue')
+        component: () => import(/* webpackChunkName: "drug" */ '../views/drugs/AddDrug.vue')
+      },
+      {
+        path: '/drugs/edit/:id',
+        name: 'edit_drug',
+        meta: {requiresAuth: true, title: " Add Drugs", show_back_btn: true},
+        component: () => import(/* webpackChunkName: "drug" */ '../views/drugs/AddDrug.vue')
       },
     ]
   }

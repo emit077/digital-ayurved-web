@@ -1,5 +1,5 @@
 <template>
-  <div class="py-15">
+  <div>
     <v-form ref="doctor_form" v-model="valid" lazy-validation @submit.prevent="addDoctor()">
       <v-row no-gutters>
         <v-col cols="12" md="5" :class="!$vuetify.display.mobile?'px-4':''">
