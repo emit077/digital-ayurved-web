@@ -182,8 +182,9 @@ export default defineComponent({
       this.getPatientDetails()
   },
   methods: {
-    addPatient() {
-      this.$refs.patient_form.validate()
+    async addPatient() {
+      console.log("add")
+      await this.$refs.patient_form.validate()
       if (!this.valid)
         return false
       this.btn_loading = true

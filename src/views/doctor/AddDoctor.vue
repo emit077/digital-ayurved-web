@@ -80,31 +80,31 @@
         </v-col>
         <v-col cols="12" md="5" :class="!$vuetify.display.mobile?'px-4':''">
           <label class="ml-1">{{ $lang.DEGREE }}</label>
-          <v-select
+          <v-text-field
               v-model="form.degree"
-              :items="['Male','Female','Transgender','Intersex','Non-Conforming','Other']"
               :label="$lang.DEGREE"
               variant="outlined"
               single-line
               class="mt-1"
+              maxlength="50"
               :rules="[$rules.REQUIRED_FIELD($lang.DEGREE)]"
               density="compact"
           >
-          </v-select>
+          </v-text-field>
         </v-col>
         <v-col cols="12" md="5" :class="!$vuetify.display.mobile?'px-4':''">
           <label class="ml-1">{{ $lang.DESIGNATION }}</label>
-          <v-select
+          <v-text-field
               v-model="form.designation"
-              :items="['Male','Female','Transgender','Intersex','Non-Conforming','Other']"
               :label="$lang.DESIGNATION"
               variant="outlined"
               single-line
+              maxlength="50"
               class="mt-1"
               :rules="[$rules.REQUIRED_FIELD($lang.DESIGNATION)]"
               density="compact"
           >
-          </v-select>
+          </v-text-field>
         </v-col>
         <v-col cols="12" md="5" :class="!$vuetify.display.mobile?'px-4':''">
           <label class="ml-1">{{ $lang.MEDICAL_REG_NUMBER }}</label>
@@ -113,6 +113,7 @@
               :label="$lang.MEDICAL_REG_NUMBER"
               variant="outlined"
               single-line
+              maxlength="50"
               class="mt-1"
               :rules="[$rules.REQUIRED_FIELD($lang.MEDICAL_REG_NUMBER)]"
               density="compact"
@@ -156,7 +157,7 @@
             <v-text-field
                 v-model="form.password"
                 :label="$lang.ENTER_YOUR_PASSWORD"
-                :rules="!doctor_table_id?$rules.PASSWORD:true"
+                :rules="!doctor_table_id?$rules.PASSWORD:''"
                 :type="show_password?'text':'password'"
                 variant="outlined"
                 single-line
@@ -221,6 +222,7 @@ export default defineComponent({
   },
   methods: {
     async addDoctor() {
+      console.log("as")
       await this.$refs.doctor_form.validate()
       if (!this.valid)
         return false
