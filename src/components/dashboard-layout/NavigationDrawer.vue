@@ -13,7 +13,8 @@
       <v-list density="compact" nav dense class="pa-0 mt-2 bg-transparent">
         <v-list-item :to="item.url" class="py-1 my-1 my-0" link @click="setActiveTab(item)"
                      v-for="(item, i) in getDrawerItems"
-                     :key="i">
+                     :key="i"
+                     :class="current_tab == item.url.name?'v-list-item--active':''">
           <v-list-item-avatar start class="ma-0">
             <v-icon :icon="item.icon" size="small"></v-icon>
           </v-list-item-avatar>
@@ -77,8 +78,7 @@ export default {
     console.log()
     this.$store.dispatch("drawer/setFlag", !this.$vuetify.display.mobile);
     this.$store.dispatch('drawer/setActiveTab', localStorage.getItem("active-tab"))
-  }
-  ,
+  },
   methods: {
     setActiveTab(item) {
       this.current_tab = item.url.name
@@ -89,7 +89,6 @@ export default {
       localStorage.clear();
       this.$router.push({name: 'login'})
     },
-
   }
 }
 </script>
