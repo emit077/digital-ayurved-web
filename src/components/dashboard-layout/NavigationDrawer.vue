@@ -75,7 +75,7 @@ export default {
     })
   },
   created() {
-    console.log()
+    this.current_tab = localStorage.getItem("active-tab")
     this.$store.dispatch("drawer/setFlag", !this.$vuetify.display.mobile);
     this.$store.dispatch('drawer/setActiveTab', localStorage.getItem("active-tab"))
   },
