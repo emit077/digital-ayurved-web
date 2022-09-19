@@ -39,6 +39,12 @@ const routes = [
         meta: {requiresAuth: true, title: "Prescription", show_back_btn: true},
         component: () => import(/* webpackChunkName: "prescription" */ '../views/prescription/Prescription.vue'),
       },
+      {
+        path: '/treatment-history/',
+        name: 'treatment_history',
+        meta: {requiresAuth: true, title: "Treatment history", show_back_btn: true},
+        component: () => import(/* webpackChunkName: "prescription" */ '../views/prescription/TreatmentHistory.vue'),
+      },
       //doctor
       {
         path: '/doctor',

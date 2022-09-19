@@ -56,7 +56,6 @@ export default defineComponent({
       {title: "Drug Name", value: "drug_name", class: "fw-450"},
       {title: "Brand", value: 'brand'},
       {title: "formula", value: "formula"},
-      {title: "MRP", value: "mrp"},
       {
         title: "", type: "btn", class: "text-right", btn_list: [
           {btn_icon: "mdi-pencil", route_name: '/drugs/edit/', router_key: "drug_table_id", color: 'primary'},

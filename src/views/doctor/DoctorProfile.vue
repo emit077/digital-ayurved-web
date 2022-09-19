@@ -15,21 +15,21 @@
 <template>
   <div>
     <div class="doctor-profile-card" :class="$vuetify.display.mobile?'text-center':''">
-      <v-row no-gutters>
-        <v-col cols="12" md="2" class="pa-3">
-          <v-avatar size="150" class="ma-4">
-            <v-img
-                src="https://cdn.vuetifyjs.com/images/john.jpg"
-                alt="John"
-            ></v-img>
-          </v-avatar>
-        </v-col>
-        <v-col cols="12" md="8" :class="$vuetify.display.mobile?'':'py-12'">
+      <v-row no-gutters class="px-5">
+        <!--        <v-col cols="12" md="2" class="pa-3">-->
+        <!--          <v-avatar size="150" class="ma-4">-->
+        <!--            <v-img-->
+        <!--                src="https://cdn.vuetifyjs.com/images/john.jpg"-->
+        <!--                alt="John"-->
+        <!--            ></v-img>-->
+        <!--          </v-avatar>-->
+        <!--        </v-col>-->
+        <v-col cols="12" md="8" :class="$vuetify.display.mobile?'':'py-5'">
           <p :class="$vuetify.display.mobile?'text-h6':'text-h4'"> Dr. {{ name }} </p>
-          <h4 class="mb-1"> +91 {{ mobile }}</h4>
-          <h4 class="mb-1"> {{ email }} </h4>
+          <h4 class="mb-1"> {{ degree }}</h4>
+          <h4 class="mb-1"> {{ designation }} </h4>
         </v-col>
-        <v-col cols="12" md="2" :class="$vuetify.display.mobile?'text-center':'pa-3 text-right'">
+        <v-col cols="12" md="4" :class="$vuetify.display.mobile?'text-center':'pa-3 text-right'">
           <div class="position-relative h-100 pr-3">
             <p class="mb-1"> Reg Id : <br v-if="!$vuetify.display.mobile"> <strong> {{ medical_reg_no }} </strong></p>
             <router-link :to="'/doctor/edit/'+doctor_table_id">
@@ -44,20 +44,20 @@
 
     <v-row no-gutters class="px-3 mt-5">
       <v-col cols="12" md="4">
+        <label class="text-medium-emphasis">{{ $lang.MOBILE_NUMBER }}:</label>
+        <p class="text-subtitle-1">{{ mobile }}</p>
+      </v-col>
+      <v-col cols="12" md="4">
+        <label class="text-medium-emphasis">{{ $lang.EMAIL }}:</label>
+        <p class="text-subtitle-1">{{ email }}</p>
+      </v-col>
+      <v-col cols="12" md="4">
         <label class="text-medium-emphasis">{{ $lang.DOB }}:</label>
         <p class="text-subtitle-1">{{ dob }}</p>
       </v-col>
       <v-col cols="12" md="4">
         <label class="text-medium-emphasis">{{ $lang.GENDER }}:</label>
         <p class="text-subtitle-1">{{ gender }}</p>
-      </v-col>
-      <v-col cols="12" md="4">
-        <label class="text-medium-emphasis">{{ $lang.DESIGNATION }}:</label>
-        <p class="text-subtitle-1">{{ designation }}</p>
-      </v-col>
-      <v-col cols="12" md="4">
-        <label class="text-medium-emphasis">{{ $lang.DEGREE }}:</label>
-        <p class="text-subtitle-1">{{ degree }}</p>
       </v-col>
       <v-col cols="12" md="4">
         <label class="text-medium-emphasis">{{ $lang.CITY }}:</label>

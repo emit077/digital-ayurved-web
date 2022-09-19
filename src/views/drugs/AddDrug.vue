@@ -132,7 +132,7 @@ export default defineComponent({
       const successHandler = (response) => {
         if (response.data.success) {
           this.$refs.add_drug_form.reset()
-          this.showSnakeBar('success', this.doctor_table_id ? "Updated Successfully" : "Added Successfully")
+          this.showSnakeBar('success', this.drug_table_id ? "Updated Successfully" : "Added Successfully")
           this.$router.push({name: 'drug_list'})
         }
       };

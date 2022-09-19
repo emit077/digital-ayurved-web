@@ -120,6 +120,7 @@ export default defineComponent({
     tab: null,
     treatment_history: [],
     headers: [
+      {title: "Doctor", value: ['doctor_name','doctor_mobile'], multiline: true, class: "fw-450"},
       {title: "Doctor", value: "doctor_name", class: "fw-450"},
       {title: "Date", value: "created", class: "",},
       {title: "Chief complaint", value: "chief_complaint"},
@@ -178,7 +179,6 @@ export default defineComponent({
       this.request_GET(this, this.$urls.PATIENT_DETAILS, params, successHandler, null, null, finallyHandler)
     },
     clickFunction(id) {
-      console.log(id)
       this.dialog.treatment_table_id = id
       this.$refs.confirmation_dialog.$data.flag = true
     },

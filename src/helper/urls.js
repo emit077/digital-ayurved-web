@@ -25,6 +25,7 @@ export default {
   PATIENT_DETAILS: "/patient/details/",
   PATIENT_ADD: "/patient/add/",
   ADD_PRESCRIPTION: "/patient/add/prescription/",
+  TREATMENT_HISTORY: "/patient/treatment-history/",
   GET_TREATMENT_DETAILS: "/patient/get/treatment-details/",
   DELETE_TREATMENT_RECORD: "/patient/delete/treatment-record/",
   GET_PRESCRIPTION_SUPPORTING_DATA: "/patient/get/prescription-supporting-data/",

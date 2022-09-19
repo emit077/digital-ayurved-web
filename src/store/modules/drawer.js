@@ -10,6 +10,12 @@ export const state = {
       is_active_tab: false,
       icon: "mdi-home"
       // access_by: [keys.ACCOUNT_ADMIN, keys.ACCOUNT_SUPER_ADMIN],
+    }, {
+      title: "Treatments",
+      url: {name: 'treatment_history'},
+      is_active_tab: false,
+      icon: "mdi-medical-bag"
+      // access_by: [keys.ACCOUNT_ADMIN, keys.ACCOUNT_SUPER_ADMIN],
     },
     {
       title: "Doctors",
