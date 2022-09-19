@@ -3,9 +3,9 @@
     <!--  search  console   -->
     <v-row class="mb-2" justify="space-between">
       <v-col cols="12" md="2">
-        <!--        <router-link :to="{ name: 'add_drug'}">-->
-        <!--          <v-btn color="primary" prepend-icon="mdi-plus">{{ $lang.ADD_NEW }}</v-btn>-->
-        <!--        </router-link>-->
+                <router-link :to="{ name: 'add_patient'}">
+                  <v-btn color="primary" prepend-icon="mdi-plus">{{ $lang.ADD_NEW }}</v-btn>
+                </router-link>
       </v-col>
       <v-col cols="12" md="5">
         <v-text-field

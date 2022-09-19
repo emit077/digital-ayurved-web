@@ -38,7 +38,6 @@ export const state = {
 export const mutations = {
   SET_ACTIVE_TAB(state, index) {
     localStorage.setItem("active-tab", index);
-
     for (let i = 0; i < state.items.length; i++) {
       state.items[i].is_active_tab = false;
     }

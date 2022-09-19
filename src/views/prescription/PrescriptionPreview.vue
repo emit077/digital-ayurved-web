@@ -10,7 +10,7 @@
       :enable-download="true"
       :preview-modal="true"
       :paginate-elements-by-height="1400"
-      filename="hee hee"
+      filename="prescription"
       :pdf-quality="2"
       :manual-pagination="false"
       pdf-format="a4"

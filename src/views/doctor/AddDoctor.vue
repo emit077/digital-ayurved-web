@@ -220,8 +220,8 @@ export default defineComponent({
       this.getDoctordetails()
   },
   methods: {
-    addDoctor() {
-      this.$refs.doctor_form.validate()
+    async addDoctor() {
+      await this.$refs.doctor_form.validate()
       if (!this.valid)
         return false
       this.btn_loading = true

@@ -65,6 +65,7 @@ export default {
       warehouse: null,
       loading: false,
       mini: false,
+      current_tab: "",
     }
   },
   computed: {
@@ -80,7 +81,7 @@ export default {
   ,
   methods: {
     setActiveTab(item) {
-      console.log(item)
+      this.current_tab = item.url.name
       this.$store.dispatch('drawer/setActiveTab', item.url.name)
     },
     logout() {

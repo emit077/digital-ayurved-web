@@ -33,6 +33,12 @@ const routes = [
         meta: {requiresAuth: true, title: "Prescription", show_back_btn: true},
         component: () => import(/* webpackChunkName: "prescription" */ '../views/prescription/Prescription.vue'),
       },
+      {
+        path: '/prescription/:id',
+        name: 'patient_prescription',
+        meta: {requiresAuth: true, title: "Prescription", show_back_btn: true},
+        component: () => import(/* webpackChunkName: "prescription" */ '../views/prescription/Prescription.vue'),
+      },
       //doctor
       {
         path: '/doctor',
@@ -66,18 +72,23 @@ const routes = [
         name: 'patients_list',
         meta: {requiresAuth: true, title: "Patients", show_back_btn: false},
         component: () => import(/* webpackChunkName: "login" */ '../views/patients/PatientsList.vue')
-      },
-      {
-        path: '/patient/profile/:id',
-        name: 'patient_profile',
-        meta: {requiresAuth: true, title: "Patients Profile", show_back_btn: true},
-        component: () => import(/* webpackChunkName: "login" */ '../views/patients/ProfileProfile.vue')
+      }, {
+        path: '/patients/add/',
+        name: 'add_patient',
+        meta: {requiresAuth: true, title: "Add Patient", show_back_btn: true},
+        component: () => import(/* webpackChunkName: "login" */ '../views/patients/AddPatient.vue')
       },
       {
         path: '/patient/edit/:id',
         name: 'patient_edit',
         meta: {requiresAuth: true, title: "Edit Patient Profile", show_back_btn: true},
-        component: () => import(/* webpackChunkName: "login" */ '../views/patients/ProfileProfile.vue')
+        component: () => import(/* webpackChunkName: "login" */ '../views/patients/AddPatient')
+      },
+      {
+        path: '/patient/profile/:id',
+        name: 'patient_profile',
+        meta: {requiresAuth: true, title: "Patients Profile", show_back_btn: true},
+        component: () => import(/* webpackChunkName: "login" */ '../views/patients/PatientProfile.vue')
       },
       // drugs
       {

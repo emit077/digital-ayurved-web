@@ -18,12 +18,15 @@ export default {
   DRUGS_LIST: "/drugs/list/",
   DRUGS_ADD: "/drugs/add/",
   DRUGS_DETAILS: "/drugs/details/",
+  DRUGS_DELETE: "/drugs/delete/",
 
   //patients api
   PATIENT_LIST: "/patient/list/",
   PATIENT_DETAILS: "/patient/details/",
+  PATIENT_ADD: "/patient/add/",
   ADD_PRESCRIPTION: "/patient/add/prescription/",
   GET_TREATMENT_DETAILS: "/patient/get/treatment-details/",
+  DELETE_TREATMENT_RECORD: "/patient/delete/treatment-record/",
   GET_PRESCRIPTION_SUPPORTING_DATA: "/patient/get/prescription-supporting-data/",
 
 }

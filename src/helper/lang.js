@@ -32,6 +32,7 @@ export default {
   CITY: "City",
 
   PATIENT: "Patient",
+  NEW_PRESCRIPTION: "New Prescription",
 
   CHIEF_COMPLAINT: "Chief Complaint",
   HISTORY_OF_CHIEF_COMPLAINT: "History of Chief Complaint",
@@ -51,6 +52,7 @@ export default {
   INSTRUCTION: "Instruction",
 
   DRUG_NAME: "Drug Name",
+  BRAND: "Brand",
   FORMULA: "Formula",
   FORMULATION_TYPE: "Formulation type",
   DOSE_TYPE: "Dose Type",

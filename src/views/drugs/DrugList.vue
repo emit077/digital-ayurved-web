@@ -23,7 +23,7 @@
 
     <!--    -->
     <div>
-      <data-table :items="drug_list" :headers="headers"/>
+      <data-table :items="drug_list" :headers="headers" @delete="OpenDialog"/>
       <v-divider/>
       <v-pagination
           class="mt-4"
@@ -35,16 +35,18 @@
           @update:modelValue="getDrugList"
       ></v-pagination>
     </div>
+    <confirmation-dialog ref="confirmation_dialog" @yes="deleteRecord"/>
   </div>
 </template>
 
 <script>
 import {defineComponent} from 'vue';
 import DataTable from "@/components/DataTable.vue"
+import ConfirmationDialog from "@/components/ConfirmationDialog";
 
 export default defineComponent({
   name: 'DrugListView',
-  components: {DataTable},
+  components: {DataTable, ConfirmationDialog},
   data: () => ({
     drug_list: [],
     page_number: 1,
@@ -58,21 +60,25 @@ export default defineComponent({
       {
         title: "", type: "btn", class: "text-right", btn_list: [
           {btn_icon: "mdi-pencil", route_name: '/drugs/edit/', router_key: "drug_table_id", color: 'primary'},
-          // {
-          //   btn_icon: "mdi-chevron-right",
-          //   route_name: '/drug/details/',
-          //   router_key: "drug_table_id",
-          //   size: "25",
-          //   color: 'primary'
-          // },
+          {
+            btn_icon: "mdi-delete-empty",
+            route_name: '/prescription_preview/',
+            router_key: "id",
+            btn_type: "delete-btn",
+            size: "25",
+            color: 'red',
+          },
         ]
       },
-    ]
+    ],
+    dialog: {
+      drug_table_id: null
+    }
+
   }),
   mounted() {
     this.getDrugList()
-  }
-  ,
+  },
   methods: {
     getDrugList() {
       var params = {
@@ -87,6 +93,26 @@ export default defineComponent({
         this.btn_loading = false
       };
       this.request_GET(this, this.$urls.DRUGS_LIST, params, successHandler, null, null, finallyHandler)
+    },
+    OpenDialog(id) {
+      console.log("id",id)
+      this.dialog.drug_table_id = id
+      this.$refs.confirmation_dialog.$data.flag = true
+    },
+    deleteRecord() {
+      console.log("delete records")
+      var form = new URLSearchParams();
+      form.append("drug_table_id", this.dialog.drug_table_id);
+      const successHandler = (response) => {
+        this.drug_list = this.drug_list.filter(item => item.id !== this.dialog.drug_table_id);
+        this.showSnakeBar('success', "Record Deleted")
+        this.$refs.confirmation_dialog.$data.flag = false
+      };
+      const finallyHandler = () => {
+        this.btn_loading = false
+      };
+      this.request_POST(this, this.$urls.DRUGS_DELETE, form, successHandler, null, null, finallyHandler)
+
     }
   }
 })

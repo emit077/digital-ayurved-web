@@ -1,7 +1,7 @@
 <template>
   <div>
-    <v-form ref="prescription_form" v-model="valid" lazy-validation @submit.prevent="createPrescription()">
-      <v-row no-gutters>
+    <v-form ref="prescription_form" v-model="valid" lazy-validation>
+      <v-row no-gutters v-if="!$route.params.id">
         <v-col cols="12" md="5" class="py-2" :class="!$vuetify.display.mobile?'px-2':''">
           <label class="ml-1">{{ $lang.PATIENT }}</label>
           <v-combobox
@@ -318,7 +318,7 @@
       <v-row no-gutters class="mt-7">
         <v-col cols="12" md="12" class="text-center">
           <v-btn :loading="btn_loading" class="register-action-btn mx-2" color="primary"
-                 height="50px" width="300px" type="submit">
+                 height="50px" width="300px" @click="createPrescription()">
             <span class="btn_text">{{ $lang.SAVE }}</span>
           </v-btn>
           <v-btn :loading="btn_loading" class="register-action-btn mx-2" color="primary"
@@ -327,9 +327,7 @@
           </v-btn>
         </v-col>
       </v-row>
-
     </v-form>
-    <add-patient-dialog ref="patient_dialog"/>
   </div>
 </template>
 <style>
@@ -339,11 +337,10 @@
 </style>
 <script>
 import {defineComponent} from 'vue';
-import AddPatientDialog from "@/components/patients/AddPatientDialog";
 
 export default defineComponent({
   name: 'AddDrugView',
-  components: {AddPatientDialog},
+  components: {},
   data: () => ({
     valid: false,// form validation
     show_password: false,
@@ -379,7 +376,10 @@ export default defineComponent({
     frequency_list: [],
   }),
   mounted() {
-    this.getPatientList()
+    if (this.$route.params.id)
+      this.patient_table_id = this.$route.params.id
+    else
+      this.getPatientList()
     this.getPrescriptionSupportingData()
   },
   methods: {
@@ -441,8 +441,8 @@ export default defineComponent({
       if (this.prescription_list.length > 1)
         this.prescription_list.splice(index, 1)
     },
-    createPrescription() {
-      this.$refs.prescription_form.validate()
+    async createPrescription() {
+      await this.$refs.prescription_form.validate()
       console.log("this.$refs.prescription_form.validate()==", this.valid)
       if (!this.valid)
         return false
@@ -451,7 +451,7 @@ export default defineComponent({
       console.log(this.patient)
       console.log(this.prescription_list)
       var form = new URLSearchParams();
-      form.append("patient_table_id", this.patient.patient_table_id);
+      form.append("patient_table_id", this.patient_table_id ? this.patient_table_id : this.patient.patient_table_id);
       form.append("blood_pressure", this.blood_pressure);
       form.append("blood_sugar", this.blood_sugar);
       form.append("plus_rate", this.plus_rate);
@@ -492,9 +492,6 @@ export default defineComponent({
         event.preventDefault();
       }
     },
-    openDialog() {
-      this.$refs.patient_dialog.$data.flag = true
-    }
   }
 });
 </script>
