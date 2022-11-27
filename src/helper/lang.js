@@ -44,6 +44,8 @@ export default {
   OE: "OE",
   REQUIRED_TEST: "Required Test",
   ADVISE: "Advise",
+  WEIGHT: "Weight",
+  DIET_EXERCISE: "Diet/Exercise",
 
   DRUG: "Drug",
   QTY: "Qty",

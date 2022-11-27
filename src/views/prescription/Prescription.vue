@@ -4,7 +4,8 @@
       <v-row no-gutters v-if="!$route.params.id">
         <v-col cols="12" md="5" class="py-2" :class="!$vuetify.display.mobile?'px-2':''">
           <label class="ml-1">{{ $lang.PATIENT }}</label>
-          <v-combobox
+          {{ patient_search }}
+          <v-autocomplete
               v-model="patient"
               v-model:search-input="patient_search"
               :rules="[$rules.REQUIRED_FIELD('')]"
@@ -32,7 +33,7 @@
                   :subtitle="item.raw.mobile"
               ></v-list-item>
             </template>
-          </v-combobox>
+          </v-autocomplete>
         </v-col>
         <v-col cols="12" md="1" class="py-2 " style="">
           <div class="d-flex h-100 align-end justify-end">
@@ -42,20 +43,47 @@
       </v-row>
       <v-row no-gutters>
         <v-col cols="12" md="2" class="py-2" :class="!$vuetify.display.mobile?'px-2':''">
-          <label class="ml-1">{{ $lang.BLOOD_PRESSURE }}</label>
-          <v-text-field
-              v-model="blood_pressure"
-              :label="$lang.NAME"
-              variant="outlined"
-              single-line
-              class="mt-1"
-              shaped
-              :rules="[$rules.REQUIRED_FIELD('')]"
-              maxlength="50"
-              density="compact"
-              hide-details
-          >
-          </v-text-field>
+          <label class="ml-1 d-block">{{ $lang.BLOOD_PRESSURE }}</label>
+          <div>
+            <v-text-field
+                v-model="blood_pressure[0]"
+                :label="$lang.NAME"
+                variant="outlined"
+                single-line
+                class="mt-1 d-inline-block"
+                shaped
+                maxlength="3"
+                density="compact"
+                hide-details
+                style="width: 50px"
+            >
+            </v-text-field>
+            <v-text-field
+                placeholder="/"
+                variant="plain"
+                single-line
+                class="mt-1 mx-n1 d-inline-block"
+                maxlength="3"
+                density="compact"
+                hide-details
+                style="width: 25px;"
+                disabled
+            >
+            </v-text-field>
+            <v-text-field
+                v-model="blood_pressure[1]"
+                :label="$lang.NAME"
+                variant="outlined"
+                single-line
+                class="mt-1 d-inline-block"
+                shaped
+                maxlength="3"
+                density="compact"
+                hide-details
+                style="width: 50px"
+            >
+            </v-text-field>
+          </div>
         </v-col>
         <v-col cols="12" md="2" class="py-2" :class="!$vuetify.display.mobile?'px-2':''">
           <label class="ml-1">{{ $lang.BLOOD_SUGAR }}</label>
@@ -66,7 +94,7 @@
               single-line
               class="mt-1"
               shaped
-              :rules="[$rules.REQUIRED_NUMBER_FIELD('')]"
+              :rules="[$rules.OPTIONAL_REQUIRED_NUMBER_FIELD('')]"
               @keydown="restrictChar($event)"
               maxlength="6"
               density="compact"
@@ -83,7 +111,7 @@
               single-line
               class="mt-1"
               shaped
-              :rules="[$rules.REQUIRED_NUMBER_FIELD('')]"
+              :rules="[$rules.OPTIONAL_REQUIRED_NUMBER_FIELD('')]"
               @keydown="restrictChar($event)"
               maxlength="5"
               density="compact"
@@ -100,7 +128,7 @@
               single-line
               class="mt-1"
               shaped
-              :rules="[$rules.REQUIRED_NUMBER_FIELD('')]"
+              :rules="[$rules.OPTIONAL_REQUIRED_NUMBER_FIELD('')]"
               @keydown="restrictChar($event)"
               maxlength="5"
               density="compact"
@@ -111,15 +139,31 @@
         <v-col cols="12" md="2" class="py-2" :class="!$vuetify.display.mobile?'px-2':''">
           <label class="ml-1">{{ $lang.SPO2 }}</label>
           <v-text-field
-              v-model="temperature"
+              v-model="spo2"
               :label="$lang.SPO2"
               variant="outlined"
               single-line
               class="mt-1"
               shaped
-              :rules="[$rules.REQUIRED_NUMBER_FIELD('')]"
               @keydown="restrictChar($event)"
               maxlength="10"
+              density="compact"
+              hide-details
+          >
+          </v-text-field>
+        </v-col>
+        <v-col cols="12" md="2" class="py-2" :class="!$vuetify.display.mobile?'px-2':''">
+          <label class="ml-1">{{ $lang.WEIGHT }}</label>
+          <v-text-field
+              v-model="weight"
+              :label="$lang.WEIGHT"
+              variant="outlined"
+              single-line
+              class="mt-1"
+              shaped
+              @keydown="restrictChar($event)"
+              :rules="[$rules.OPTIONAL_REQUIRED_NUMBER_FIELD('')]"
+              maxlength="3"
               density="compact"
               hide-details
           >
@@ -200,7 +244,21 @@
               class="mt-1"
               rows="3"
               shaped
-              :rules="[$rules.REQUIRED_FIELD('')]"
+              density="compact"
+          >
+          </v-textarea>
+        </v-col>
+        <v-col cols="12" md="4" class="py-2" :class="!$vuetify.display.mobile?'px-2':''">
+          <label class="ml-1">{{ $lang.DIET_EXERCISE }}</label>
+          <v-textarea
+              v-model="diet_exercise"
+              :label="$lang.DIET_EXERCISE"
+              variant="outlined"
+              single-line
+              hide-details
+              class="mt-1"
+              rows="3"
+              shaped
               density="compact"
           >
           </v-textarea>
@@ -330,9 +388,19 @@
     </v-form>
   </div>
 </template>
-<style>
+<style lang="scss">
 .custom-combobox input {
   width: 100%;
+}
+
+.blood-pressure .v-field__input {
+  --v-field-padding-start: 0px !important;
+  --v-field-padding-end: 0px !important;
+
+  input {
+    font-size: 25px;
+    margin-bottom: 5px;
+  }
 }
 </style>
 <script>
@@ -345,12 +413,14 @@ export default defineComponent({
     valid: false,// form validation
     show_password: false,
     btn_loading: false,
-    blood_pressure: 10,
-    blood_sugar: 11,
-    plus_rate: 12,
-    spo2: 13,
-    temperature: 14,
-    oe: 15,
+    blood_pressure: [0, 0],
+    blood_sugar: "",
+    plus_rate: "",
+    spo2: "",
+    weight: "",
+    diet_exercise: "",
+    temperature: "",
+    oe: "",
     required_test: "dsa",
     advise: "adasdas",
     chief_complaint: "dasda",
@@ -399,7 +469,7 @@ export default defineComponent({
     },
     getPatientList() {
       var params = {
-        search_query: this.search_query,
+        search_query: this.patient_search,
         page_number: this.page_number,
       }
       const successHandler = (response) => {
@@ -452,7 +522,7 @@ export default defineComponent({
       console.log(this.prescription_list)
       var form = new URLSearchParams();
       form.append("patient_table_id", this.patient_table_id ? this.patient_table_id : this.patient.patient_table_id);
-      form.append("blood_pressure", this.blood_pressure);
+      form.append("blood_pressure", this.blood_pressure.join('/'));
       form.append("blood_sugar", this.blood_sugar);
       form.append("plus_rate", this.plus_rate);
       form.append("spo2", this.spo2);
@@ -461,6 +531,8 @@ export default defineComponent({
       form.append("required_test", this.required_test);
       form.append("advise", this.advise);
       form.append("chief_complaint", this.chief_complaint);
+      form.append("diet_exercise", this.diet_exercise);
+      form.append("weight", this.weight);
       form.append("history_of_chief_complaint", this.history_of_chief_complaint);
       form.append("prescription_list", JSON.stringify(this.prescription_list));
 

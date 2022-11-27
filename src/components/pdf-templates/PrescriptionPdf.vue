@@ -13,27 +13,34 @@
     <!-- patient -->
     <hr>
     <div>
-      <b>Patient Details</b>: <br>
       <!--      <b>Patient ID: </b> {{ patient_id }},-->
       <span class="label">Name: </span> {{ patient_name }},
       <span class="label">Age: </span>{{ patient_age }}Y,
       <span class="label">Sex: </span>{{ patient_gender }},
-      <span class="label">Contact number: </span>{{ patient_contact }},
-      <span class="label">Address: </span>{{ patient_address }},
+      <div>
+        <span class="label">Contact number: </span>{{ patient_contact }},
+        <span class="label">Occupation: </span>{{ patient_occupation }},
+        <span class="label">Address: </span>{{ patient_address }},
+      </div>
+
     </div>
     <hr>
     <div>
       <div>
-        <span class="label">Pulse: </span>{{ pulse }} |
-        <span class="label">BP: </span>{{ bp }} |
-        <span class="label">Temp: </span>{{ temperature }} |
-        <span class="label">Sugar: </span>{{ blood_sugar }} |
-        <span class="label">Weight: </span>{{ weight }}
+        <span class="label">Pulse: </span>{{ pulse }}/min |
+        <span class="label">BP: </span>{{ blood_pressure }} mmHg |
+        <span class="label">Temp: </span>{{ temperature }}
+        <v-icon size="14" class="mt-n1" color="#575656">mdi-temperature-fahrenheit</v-icon>
+        |
+        <span class="label">Sugar: </span>{{ blood_sugar }} mg/dl |
+        <span class="label">Weight: </span>{{ weight }}kg
       </div>
       <div>
-        <p><span class="label">Main Complain: </span> {{ main_complain }}</p>
-        <p><span class="label">History of Complain: </span>{{ history_of_complain }}</p>
-        <p><span class="label">Advise: </span>{{ advise }}</p>
+        <p><span class="label">Chief Complaints: </span> {{ chief_complaint }}</p>
+        <p><span class="label">Medical history: </span>{{ history_of_chief_complaint }}</p>
+        <p><span class="label">Systemic Examination: </span>{{ oe }}</p>
+        <p><span class="label" v-if="required_test">Required Test: </span>{{ required_test }}</p>
+        <p><span class="label" v-if="diet_exercise">Diet / Exercise: </span>{{ required_test }}</p>
       </div>
     </div>
     <hr>
@@ -56,6 +63,11 @@
         </tr>
       </table>
     </div>
+    <hr>
+    <div>
+      <p><span class="label">Diet/Exercise/Yoga: </span>{{ advise }}</p>
+    </div>
+
   </div>
 </template>
 <style>
@@ -114,15 +126,16 @@ export default {
     patient_occupation: "Student",
     patient_contact: "8305050674",
 
-    bp: "12",
     pulse: "123",
     temperature: "90",
     blood_sugar: "123",
     weight: "312",
-    main_complain: "312",
-    history_of_complain: "312",
+    chief_complaint: "312",
+    history_of_chief_complaint: "312",
     advise: "drink boiled Water",
-    prescription_list: []
+    prescription_list: [],
+    required_test: "",
+    diet_exercise: "",
   }),
   created() {
     if (this.$route.params.id)
@@ -142,7 +155,7 @@ export default {
         this.patient_email = response.data.patient_email;
         this.patient_gender = response.data.gender;
         this.patient_age = response.data.age;
-        this.occupation = response.data.occupation;
+        this.patient_occupation = response.data.occupation;
         this.patient_address = response.data.address;
         this.patient_city = response.data.city;
         //
@@ -151,13 +164,16 @@ export default {
         this.plus_rate = response.data.plus_rate;
         this.temperature = response.data.temperature;
         this.spo2 = response.data.spo2;
+        this.weight = response.data.weight;
+        this.diet_exercise = response.data.diet_exercise;
         //
         this.chief_complaint = response.data.chief_complaint;
+
         this.history_of_chief_complaint = response.data.history_of_chief_complaint;
         this.advise = response.data.advise;
         this.oe = response.data.oe;
         this.required_test = response.data.required_test;
-        //
+        `//`
         this.prescription_list = response.data.prescription_list
       };
       const finallyHandler = () => {

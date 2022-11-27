@@ -52,7 +52,16 @@ export default {
     return v => {
       if (!v)
         return field_name + " can not be Empty";
-      if (!isNaN(parseFloat(v)) && v >= 1 && v <= 999999999999)
+      if (!isNaN(parseFloat(v)))
+        return true;
+      return field_name + " must be number";
+    }
+  },
+  OPTIONAL_REQUIRED_NUMBER_FIELD(field_name) {
+    return v => {
+      if (!v)
+        return true
+      if (!isNaN(parseFloat(v)))
         return true;
       return field_name + " must be number";
     }
