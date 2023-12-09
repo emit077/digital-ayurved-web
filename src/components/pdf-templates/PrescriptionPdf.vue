@@ -22,7 +22,6 @@
         <span class="label">Occupation: </span>{{ patient_occupation }},
         <span class="label">Address: </span>{{ patient_address }},
       </div>
-
     </div>
     <hr>
     <div>

@@ -1,6 +1,6 @@
 export default {
-  BASE_URL: "http://localhost:8000/api",
-
+  // BASE_URL: "http://localhost:8000/api",
+  BASE_URL: "https://api.digitalayurved.in/api",
 
   LOGIN: "/users/login/",
   FORGOT_PASSWORD: "/users/forget-password/",
@@ -28,7 +28,6 @@ export default {
   TREATMENT_HISTORY: "/patient/treatment-history/",
   GET_TREATMENT_DETAILS: "/patient/get/treatment-details/",
   DELETE_TREATMENT_RECORD: "/patient/delete/treatment-record/",
-  GET_PRESCRIPTION_SUPPORTING_DATA: "/patient/get/prescription-supporting-data/",
-
-}
-
+  GET_PRESCRIPTION_SUPPORTING_DATA:
+    "/patient/get/prescription-supporting-data/",
+};
