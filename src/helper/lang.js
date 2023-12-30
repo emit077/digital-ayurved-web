@@ -60,9 +60,12 @@ export default {
   DOSE_TYPE: "Dose Type",
   ANUPAAN: "Anupaan",
 
+  EXPIRY_DATE: "Expiry Date",
+  VENDOR: "Vendor",
+  UNIT_PRICE: "Unit Price",
+
   /* search place holders */
   DOCTOR_SEARCH: "Search by Doctor Name, Mobile, Email, Medical Reg number",
   PATIENT_SEARCH: "Search by Patient Name, Mobile, Email",
   DRUG_SEARCH: "Search by Drug Name, Brand, Formula",
-
-}
+};

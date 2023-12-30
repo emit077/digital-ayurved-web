@@ -27,6 +27,7 @@ const routes = [
         component: () => import(/* webpackChunkName: "overview" */ '../views/overview/Overview.vue'),
 
       },
+      // prescription
       {
         path: '/prescription',
         name: 'prescription',
@@ -115,6 +116,15 @@ const routes = [
         meta: {requiresAuth: true, title: " Add Drugs", show_back_btn: true},
         component: () => import(/* webpackChunkName: "drug" */ '../views/drugs/AddDrug.vue')
       },
+      // purchase order
+      {
+        path: '/purchase-order/',
+        name: 'purchase_order',
+        meta: {requiresAuth: true, title: " Add Drugs", show_back_btn: true},
+        component: () => import(/* webpackChunkName: "drug" */ '../views/purchase/CreatePurchaseOrder.vue')
+      }
+
+
     ]
   }
 ]

@@ -1,6 +1,6 @@
 export default {
-  // BASE_URL: "http://localhost:8000/api",
-  BASE_URL: "https://api.digitalayurved.in/api",
+  BASE_URL: "http://localhost:8888/api",
+  // BASE_URL: "https://api.digitalayurved.in/api",
 
   LOGIN: "/users/login/",
   FORGOT_PASSWORD: "/users/forget-password/",
@@ -19,6 +19,7 @@ export default {
   DRUGS_ADD: "/drugs/add/",
   DRUGS_DETAILS: "/drugs/details/",
   DRUGS_DELETE: "/drugs/delete/",
+  CREATE_PURCHASE_ORDER: "/drugs/create-purchase-order/",
 
   //patients api
   PATIENT_LIST: "/patient/list/",
@@ -30,4 +31,7 @@ export default {
   DELETE_TREATMENT_RECORD: "/patient/delete/treatment-record/",
   GET_PRESCRIPTION_SUPPORTING_DATA:
     "/patient/get/prescription-supporting-data/",
+
+  // MASTER api
+  VENDOR_LIST: "/master/vendor-list/",
 };
