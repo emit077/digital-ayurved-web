@@ -118,10 +118,17 @@ const routes = [
       },
       // purchase order
       {
+        path: '/create-purchase-order/',
+        name: 'create_purchase_order',
+        meta: {requiresAuth: true, title: "Create Purchase Order", show_back_btn: true},
+        component: () => import(/* webpackChunkName: "drug" */ '../views/purchase/CreatePurchaseOrder.vue')
+      },
+      // purchase order
+      {
         path: '/purchase-order/',
         name: 'purchase_order',
-        meta: {requiresAuth: true, title: " Add Drugs", show_back_btn: true},
-        component: () => import(/* webpackChunkName: "drug" */ '../views/purchase/CreatePurchaseOrder.vue')
+        meta: {requiresAuth: true, title: "Purchase Order", show_back_btn: true},
+        component: () => import(/* webpackChunkName: "drug" */ '../views/purchase/purchaseOrderList.vue')
       }
 
 

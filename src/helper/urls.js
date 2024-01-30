@@ -19,7 +19,10 @@ export default {
   DRUGS_ADD: "/drugs/add/",
   DRUGS_DETAILS: "/drugs/details/",
   DRUGS_DELETE: "/drugs/delete/",
-  CREATE_PURCHASE_ORDER: "/drugs/create-purchase-order/",
+
+  // inventory
+  CREATE_PURCHASE_ORDER: "/inventory/create-purchase-order/",
+  LIST_PURCHASE_ORDER: "/inventory/list-purchase-order/",
 
   //patients api
   PATIENT_LIST: "/patient/list/",

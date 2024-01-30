@@ -29,6 +29,7 @@ thead tr th:last-child {
     <tbody v-if="items.length>0">
     <tr v-for="(item, i) in items" :key="i">
       <td v-for="(header, j) in headers" :key="j">
+        <!-- btns -->
         <div v-if="header.type=='btn'" :class="header.class">
           <span v-for="(btn,k) in header.btn_list" :key="k">
             <span v-if="btn.btn_type=='delete-btn'">
@@ -44,15 +45,17 @@ thead tr th:last-child {
               </v-btn>
             </router-link>
           </span>
-
         </div>
+        <!--  -->
         <div v-else>
+          <!-- icons -->
           <div class="d-inline-flex v-align-middle mr-2" v-if="header.gender_icon">
             <v-icon v-if="item.gender=='Male'">mdi-gender-female</v-icon>
             <v-icon v-else-if="item.gender=='Female'">mdi-gender-male</v-icon>
             <v-icon v-else-if="item.gender=='Transgender'">mdi-gender-transgender</v-icon>
             <v-icon v-else>mdi-gender-non-binary</v-icon>
           </div>
+          <!--  -->
           <div class="d-inline-flex v-align-middle" :class="header.class">
             <div v-if="Array.isArray(header.value)">
               <p v-for="(el, k) in header.value" :key="k">{{ item[el] }}</p>
