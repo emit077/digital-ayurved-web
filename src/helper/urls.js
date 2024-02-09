@@ -23,6 +23,9 @@ export default {
   // inventory
   CREATE_PURCHASE_ORDER: "/inventory/create-purchase-order/",
   LIST_PURCHASE_ORDER: "/inventory/list-purchase-order/",
+  LIST_INVOICE: "/inventory/list-invoice/",
+  CREATE_INVOICE: "/inventory/create-invoice/",
+  GET_INVOICE_DETAILS: "/inventory/get-invoice-details/",
 
   //patients api
   PATIENT_LIST: "/patient/list/",

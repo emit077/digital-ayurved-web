@@ -129,6 +129,25 @@ const routes = [
         name: 'purchase_order',
         meta: {requiresAuth: true, title: "Purchase Order", show_back_btn: true},
         component: () => import(/* webpackChunkName: "drug" */ '../views/purchase/purchaseOrderList.vue')
+      },
+      // invoice
+      {
+        path: '/create-invoice/',
+        name: 'create_invoice',
+        meta: {requiresAuth: true, title: "Create Invoice", show_back_btn: true},
+        component: () => import(/* webpackChunkName: "invoice" */ '../views/invoice/CreateInvoice.vue')
+      },
+      {
+        path: '/invoices/',
+        name: 'invoice_list',
+        meta: {requiresAuth: true, title: "Invoices", show_back_btn: true},
+        component: () => import(/* webpackChunkName: "invoice" */ '../views/invoice/InvoiceList.vue')
+      },
+       {
+        path: '/invoice-details/:id',
+        name: 'invoice_details',
+        meta: {requiresAuth: true, title: "Invoice Details", show_back_btn: true},
+        component: () => import(/* webpackChunkName: "invoice" */ '../views/invoice/InvoiceDetails.vue'),
       }
 
 

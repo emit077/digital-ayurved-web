@@ -63,6 +63,8 @@ export default {
   EXPIRY_DATE: "Expiry Date",
   VENDOR: "Vendor",
   UNIT_PRICE: "Unit Price",
+  TOTAL: "Total",
+  MRP: "MRP",
 
   /* search place holders */
   DOCTOR_SEARCH: "Search by Doctor Name, Mobile, Email, Medical Reg number",
