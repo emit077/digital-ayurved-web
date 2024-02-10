@@ -1,115 +1,88 @@
 <template>
   <div>
-    <v-form ref="purchase_order_form" v-model="valid" lazy-validation>
-      <v-row no-gutters v-if="!$route.params.id">
-        <v-col
-          cols="12"
-          md="5"
-          class="py-2"
-          :class="!$vuetify.display.mobile ? '' : ''"
-        >
-          <label class="ml-1">{{ $lang.VENDOR }}</label>
-          <v-autocomplete
-            v-model="vendor"
-            v-model:search-input="vendor_search_query"
-            :rules="[$rules.REQUIRED_FIELD('')]"
-            :items="vendor_list"
-            variant="outlined"
-            density="compact"
-            placeholder="Select Vendor"
-            class="custom-combobox"
-            hide-details
-            @focus="getVendorList"
-            @keydown="getVendorList"
-            item-title="vendor_name"
-            item-value="id"
+    <v-row no-gutters class="mb-4">
+      <v-col cols="12" md="4">
+        <label class="text-medium-emphasis">{{ $lang.PATIENT }}:</label>
+        <p class="text-subtitle-1" v-if="invoice_data.patient_table_id">
+          <navigator-text
+            :text="invoice_data.patient_name"
+            :router_name="'patient_profile'"
+            :router_params="{ id: invoice_data.patient_table_id }"
           >
-            <template v-slot:selection="data">
-              <span>
-                {{ data.item.raw.vendor_name }}
-              </span>
-            </template>
-            <template v-slot:item="{ props, item }">
-              <v-list-item
-                v-if="typeof item.raw !== 'object'"
-                v-bind="props"
-              ></v-list-item>
-              <v-list-item
-                v-else
-                v-bind="props"
-                :prepend-avatar="item.raw.avatar"
-                :title="item.raw.vendor_name"
-                :subtitle="item.raw.contact_number"
-              ></v-list-item>
-            </template>
-          </v-autocomplete>
-        </v-col>
-      </v-row>
-      <!-- order items -->
-      <div>
-        <table>
-          <thead>
-            <tr>
-              <td style="min-width: 30%">{{ $lang.DRUG }}</td>
-              <td class="text-right" style="min-width: 10%">{{ $lang.QTY }}</td>
-              <td class="text-right" style="min-width: 10%">{{ $lang.MRP }}</td>
-              <td class="text-right" style="min-width: 10%">
-                {{ $lang.TOTAL }}
-              </td>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(item, i) in invoice_items" :key="i">
-              <td>{{ item.drug_name }}</td>
-              <td class="text-right">{{ item.quantity }}</td>
-              <td class="text-right">{{ item.mrp }}</td>
-              <td class="text-right">{{ formateAmount(item.subtotal) }}</td>
-            </tr>
-          </tbody>
-          <tfoot>
-            <tr>
-              <td colspan="2" rowspan="4"></td>
-              <td colspan="1" class="text-right font-weight-bold py-2 pr-3">
-                Grand Total
-              </td>
-              <td class="text-right font-weight-bold py-2">
-                {{ invoice_data.item_total }}
-              </td>
-            </tr>
-            <!-- discount row -->
-            <tr>
-              <td colspan="1" class="text-right font-weight-bold py-2 pr-3">
-                Dicsount ({{ parseInt(invoice_data.discount_value) }}%)
-              </td>
-              <td class="text-right font-weight-bold py-2">
-                -{{ invoice_data.discount_amount }}
-              </td>
-            </tr>
-            <!-- Raounf off -->
-            <tr>
-              <td colspan="1" class="text-right font-weight-bold py-2 pr-3">
-                Round off
-              </td>
-              <td class="text-right font-weight-bold py-2">
-                {{ invoice_data.round_off }}
-              </td>
-            </tr>
-            <!-- agrand total -->
-            <tr>
-              <td colspan="1" class="text-right font-weight-bold py-2 pr-3">
-                Invoice Total
-              </td>
-              <td class="text-right font-weight-bold py-2">
-                {{ invoice_data.invoice_total }}
-              </td>
-            </tr>
-            <!-- end calc -->
-          </tfoot>
-        </table>
-        <!--  -->
-      </div>
-      <!-- order item end -->
-    </v-form>
+          </navigator-text>
+        </p>
+      </v-col>
+      <v-col cols="12" md="4">
+        <label class="text-medium-emphasis">{{ $lang.INVOICE_DATE }}:</label>
+        <p class="text-subtitle-1">
+          {{ invoice_data.invoice_date }}
+        </p>
+      </v-col>
+    </v-row>
+    <!-- order items -->
+    <div>
+      <table>
+        <thead>
+          <tr>
+            <td >{{ $lang.DRUG }}</td>
+            <td class="text-right" >{{ $lang.QTY }}</td>
+            <td class="text-right" style="min-width: 15%" >{{ $lang.MRP }}</td>
+            <td class="text-right" style="min-width: 20%">
+              {{ $lang.TOTAL }}
+            </td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(item, i) in invoice_items" :key="i">
+            <td>{{ item.drug_name }}</td>
+            <td class="text-right">{{ item.quantity }}</td>
+            <td class="text-right">{{ item.mrp }}</td>
+            <td class="text-right">{{ formateAmount(item.subtotal) }}</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="2" rowspan="4"></td>
+            <td colspan="1" class="text-right font-weight-bold py-2 pr-3">
+              Grand Total
+            </td>
+            <td class="text-right font-weight-bold py-2">
+              {{ invoice_data.item_total }}
+            </td>
+          </tr>
+          <!-- discount row -->
+          <tr>
+            <td colspan="1" class="text-right font-weight-bold py-2 pr-3">
+              Dicsount ({{ parseInt(invoice_data.discount_value) }}%)
+            </td>
+            <td class="text-right font-weight-bold py-2">
+              -{{ invoice_data.discount_amount }}
+            </td>
+          </tr>
+          <!-- Raounf off -->
+          <tr>
+            <td colspan="1" class="text-right font-weight-bold py-2 pr-3">
+              Round off
+            </td>
+            <td class="text-right font-weight-bold py-2">
+              {{ invoice_data.round_off }}
+            </td>
+          </tr>
+          <!-- agrand total -->
+          <tr>
+            <td colspan="1" class="text-right font-weight-bold py-2 pr-3">
+              Invoice Total
+            </td>
+            <td class="text-right font-weight-bold py-2">
+              {{ invoice_data.invoice_total }}
+            </td>
+          </tr>
+          <!-- end calc -->
+        </tfoot>
+      </table>
+      <!--  -->
+    </div>
+    <!-- order item end -->
   </div>
 </template>
 <style lang="scss">

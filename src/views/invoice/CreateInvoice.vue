@@ -8,25 +8,25 @@
           class="py-2"
           :class="!$vuetify.display.mobile ? '' : ''"
         >
-          <label class="ml-1">{{ $lang.VENDOR }}</label>
+          <label class="ml-1">{{ $lang.PATIENT }}</label>
           <v-autocomplete
-            v-model="vendor"
-            v-model:search-input="vendor_search_query"
+            v-model="patient"
+            v-model:search-input="patient_search"
             :rules="[$rules.REQUIRED_FIELD('')]"
-            :items="vendor_list"
+            :items="patient_list"
             variant="outlined"
             density="compact"
-            placeholder="Select Vendor"
+            placeholder="Select Patient"
             class="custom-combobox"
+            item-title="name"
+            item-value="patient_table_id"
             hide-details
-            @focus="getVendorList"
-            @keydown="getVendorList"
-            item-title="vendor_name"
-            item-value="id"
+            @focus="getPatientList"
+            @keydown="getPatientList"
           >
-            <template v-slot:selection="data">
+            <template v-slot:chip="data">
               <span>
-                {{ data.item.raw.vendor_name }}
+                {{ data.item.raw.name }}
               </span>
             </template>
             <template v-slot:item="{ props, item }">
@@ -38,8 +38,8 @@
                 v-else
                 v-bind="props"
                 :prepend-avatar="item.raw.avatar"
-                :title="item.raw.vendor_name"
-                :subtitle="item.raw.contact_number"
+                :title="item.raw.name + '(' + item.raw.patient_table_id + ')'"
+                :subtitle="item.raw.mobile"
               ></v-list-item>
             </template>
           </v-autocomplete>
@@ -53,7 +53,7 @@
               <td style="min-width: 30%">{{ $lang.DRUG }}</td>
               <td style="min-width: 10%">{{ $lang.EXPIRY_DATE }}</td>
               <td style="min-width: 10%">{{ $lang.QTY }}</td>
-              <td style="min-width: 10%">{{ $lang.UNIT_PRICE }}</td>
+              <td class="text-right" style="min-width: 5%">{{ $lang.MRP }}</td>
               <td class="text-right" style="min-width: 10%">
                 {{ $lang.TOTAL }}
               </td>
@@ -68,13 +68,14 @@
                   v-model:search-input="item.drug_search_query"
                   :items="drug_list"
                   :rules="[$rules.REQUIRED_FIELD('')]"
+                  item-title="drug_name"
+                  item-value="drug_table_id"
                   placeholder="Drug"
                   variant="outlined"
                   density="compact"
                   class="custom-combobox mt-1"
                   hide-details
-                  item-title="drug_name"
-                  item-value="drug_table_id"
+                  return-object
                   @focus="getDrugList"
                   @keydown="getDrugList"
                 >
@@ -91,6 +92,11 @@
                       :subtitle="item.raw.brand"
                     ></v-list-item>
                   </template>
+                  <!-- <template v-slot:selection="data">
+                    <span>
+                      {{ data.item.raw.drug_name }}
+                    </span>
+                  </template> -->
                 </v-autocomplete>
               </td>
               <td>
@@ -124,25 +130,12 @@
                 >
                 </v-text-field>
               </td>
-              <td>
-                <v-text-field
-                  v-model="item.unit_price"
-                  :placeholder="$lang.UNIT_PRICE"
-                  variant="outlined"
-                  single-line
-                  class="mt-1"
-                  shaped
-                  :rules="[$rules.REQUIRED_FIELD('')]"
-                  density="compact"
-                  hide-details
-                  maxlength="5"
-                  @keydown="restrictChar($event)"
-                >
-                </v-text-field>
+              <td class="text-right">
+                {{ item.drug?.mrp || 0 }}
               </td>
               <td class="text-right">
-                <span v-if="item.qty && item.unit_price">
-                  {{ formateAmount(item.qty * item.unit_price) }}
+                <span >
+                  {{ formateAmount((item.qty * item.drug?.mrp)||0) }}
                 </span>
               </td>
               <td class="text-center">
@@ -163,29 +156,48 @@
                 Total
               </td>
               <td class="text-right font-weight-bold py-2">
-                {{ getOrderTotal() }}
+                {{ formateAmount(order_total) }}
               </td>
             </tr>
             <!-- discount row -->
             <tr>
               <td colspan="2" class="text-right font-weight-bold py-2 pr-3">
-                Dicsount
+                Dicsount(
+                <div class="discount-block">
+                  <v-text-field
+                    v-model="discount_value"
+                    single-line
+                    class="mt-1"
+                    density="compact"
+                    hide-details
+                    maxlength="2"
+                    @keydown="restrictChar($event)"
+                  >
+                  </v-text-field>
+                </div>
+                %)
               </td>
-              <td class="text-right font-weight-bold py-2">(-)</td>
+              <td class="text-right font-weight-bold py-2">
+                -{{ formateAmount(discount_amount) }}
+              </td>
             </tr>
             <!-- Raounf off -->
             <tr>
               <td colspan="2" class="text-right font-weight-bold py-2 pr-3">
                 Round off
               </td>
-              <td class="text-right font-weight-bold py-2">(-)</td>
+              <td class="text-right font-weight-bold py-2">
+                {{ formateAmount(roundoff_amount) }}
+              </td>
             </tr>
             <!-- agrand total -->
             <tr>
               <td colspan="2" class="text-right font-weight-bold py-2 pr-3">
-                Invoice Amount
+                Invoice Total
               </td>
-              <td class="text-right font-weight-bold py-2"></td>
+              <td class="text-right font-weight-bold py-2">
+                {{ formateAmount(getInvoiceTotal()) }}
+              </td>
             </tr>
             <!-- end calc -->
           </tfoot>
@@ -235,6 +247,12 @@
   </div>
 </template>
 <style lang="scss">
+.discount-block {
+  display: inline-block;
+  width: 40px;
+  position: relative;
+  bottom: -10px;
+}
 .custom-combobox input {
   width: 100%;
 }
@@ -272,8 +290,9 @@ export default defineComponent({
     valid: false, // form validation
     btn_loading: false,
     patient_list: [],
+    patient_search: "",
+    patient: "",
     vendor: "",
-    vendor_search_query: "",
     vendor_list: [],
     drug_list: [],
     order_item_list: [
@@ -287,10 +306,14 @@ export default defineComponent({
       },
     ],
     order_total: 0,
+    invoice_total: 0,
+    roundoff_amount: 0,
+    discount_value: 0,
+    discount_amount: 0,
   }),
   mounted() {
     if (this.$route.params.id) this.patient_table_id = this.$route.params.id;
-    else this.getVendorList();
+    else this.getPatientList();
   },
   methods: {
     getDrugList() {
@@ -310,21 +333,25 @@ export default defineComponent({
         null
       );
     },
-    getVendorList() {
+    getPatientList() {
       var params = {
-        search_query: this.vendor_search_query,
+        search_query: this.patient_search,
         page_number: this.page_number,
       };
       const successHandler = (response) => {
-        this.vendor_list = response.data.vendor_list;
+        this.patient_list = response.data.patient_list;
+      };
+      const finallyHandler = () => {
+        this.btn_loading = false;
       };
       this.request_GET(
         this,
-        this.$urls.VENDOR_LIST,
+        this.$urls.PATIENT_LIST,
         params,
         successHandler,
         null,
-        null
+        null,
+        finallyHandler
       );
     },
     appendNewEmptyRow() {
@@ -351,23 +378,18 @@ export default defineComponent({
 
       console.log(this.patient);
       var form = new URLSearchParams();
-      form.append("vendor_table_id", this.vendor);
-      form.append("transaction_type", "Purchase Order");
       form.append("order_item_list", JSON.stringify(this.order_item_list));
 
       // dummy data
-      form.append("patient_table_id", 1);
-      form.append("discount_value", 10);
-      form.append("patient_table_id", 1);
+      form.append("discount_value", this.discount_value);
+      form.append("patient_table_id", this.patient);
 
       const successHandler = (response) => {
         this.showSnakeBar(
           "success",
-          this.purchase_order_table_id
-            ? "Purchase Order Created"
-            : "Purchase Order Updated"
+          this.purchase_order_table_id ? "Invoice Created" : "Invoice Updated"
         );
-        this.$router.push({ name: "purchase_order" });
+        this.$router.push({ name: "invoice_list" });
         this.$refs.prescription_form.reset();
       };
       const finallyHandler = () => {
@@ -375,7 +397,7 @@ export default defineComponent({
       };
       this.request_POST(
         this,
-        this.$urls.CREATE_PURCHASE_ORDER,
+        this.$urls.CREATE_INVOICE,
         form,
         successHandler,
         null,
@@ -399,14 +421,27 @@ export default defineComponent({
         event.preventDefault();
       }
     },
-    getOrderTotal() {
-      let total_amount = 0;
+    setDrugMRP(index,drug_table_id){
+
+    },
+    getInvoiceTotal() {
+      let order_total = 0;
       this.order_item_list.forEach((obj) => {
-        if (obj.qty && obj.unit_price) {
-          total_amount += obj.qty * obj.unit_price;
+        let mrp = obj.drug?.mrp;
+        if (obj.qty && mrp) {
+          order_total += obj.qty * mrp;
         }
       });
-      return this.formateAmount(total_amount);
+      this.order_total = order_total;
+      //
+      this.discount_amount = (order_total * this.discount_value) / 100;
+      let subtotal = order_total - this.discount_amount;
+      this.roundoff_amount =
+        subtotal - parseInt(subtotal) > 0
+          ? 1 - (subtotal - parseInt(subtotal))
+          : 0;
+      this.invoice_total = subtotal + this.roundoff_amount;
+      return this.invoice_total;
     },
   },
 });

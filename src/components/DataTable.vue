@@ -38,8 +38,8 @@ thead tr th:last-child {
                 <v-icon :size="btn.size ? btn.size:20">{{ btn.btn_icon }}</v-icon>
               </v-btn>
             </span>
-            <router-link :to="btn.route_name+item[btn.router_key]"
-                         :target="btn.target" v-else>
+            <router-link v-else :to="btn.route_name+item[btn.router_key]"
+                         :target="btn.target" >
               <v-btn size="x-small" icon="" variant="text" :color="btn.color?btn.color:'#000'">
                 <v-icon :size="btn.size ? btn.size:20">{{ btn.btn_icon }}</v-icon>
               </v-btn>

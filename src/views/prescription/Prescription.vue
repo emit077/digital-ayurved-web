@@ -4,7 +4,6 @@
       <v-row no-gutters v-if="!$route.params.id">
         <v-col cols="12" md="5" class="py-2" :class="!$vuetify.display.mobile?'px-2':''">
           <label class="ml-1">{{ $lang.PATIENT }}</label>
-          {{ patient_search }}
           <v-autocomplete
               v-model="patient"
               v-model:search-input="patient_search"
