@@ -89,6 +89,7 @@
 .custom-combobox input {
   width: 100%;
 }
+tfoot tr:nth-child(even),
 tbody tr:nth-child(even) {
   background-color: #f2f2f2;
 }

@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-form ref="purchase_order_form" v-model="valid" lazy-validation>
-      <v-row no-gutters v-if="!$route.params.id">
+      <v-row no-gutters>
         <v-col
           cols="12"
           md="5"
@@ -21,14 +21,10 @@
             item-title="name"
             item-value="patient_table_id"
             hide-details
+            return-object
             @focus="getPatientList"
             @keydown="getPatientList"
           >
-            <template v-slot:chip="data">
-              <span>
-                {{ data.item.raw.name }}
-              </span>
-            </template>
             <template v-slot:item="{ props, item }">
               <v-list-item
                 v-if="typeof item.raw !== 'object'"
@@ -37,7 +33,6 @@
               <v-list-item
                 v-else
                 v-bind="props"
-                :prepend-avatar="item.raw.avatar"
                 :title="item.raw.name + '(' + item.raw.patient_table_id + ')'"
                 :subtitle="item.raw.mobile"
               ></v-list-item>
@@ -51,7 +46,6 @@
           <thead>
             <tr>
               <td style="min-width: 30%">{{ $lang.DRUG }}</td>
-              <td style="min-width: 10%">{{ $lang.EXPIRY_DATE }}</td>
               <td style="min-width: 10%">{{ $lang.QTY }}</td>
               <td class="text-right" style="min-width: 5%">{{ $lang.MRP }}</td>
               <td class="text-right" style="min-width: 10%">
@@ -87,7 +81,6 @@
                     <v-list-item
                       v-else
                       v-bind="props"
-                      :prepend-avatar="item.raw.avatar"
                       :title="item.raw.drug_name"
                       :subtitle="item.raw.brand"
                     ></v-list-item>
@@ -98,21 +91,6 @@
                     </span>
                   </template> -->
                 </v-autocomplete>
-              </td>
-              <td>
-                <v-text-field
-                  v-model="item.expiry_date"
-                  :label="$lang.EXPIRY_DATE"
-                  variant="outlined"
-                  single-line
-                  hide-details
-                  class="mt-1"
-                  type="date"
-                  shaped
-                  :rules="[$rules.REQUIRED_FIELD($lang.EXPIRY_DATE)]"
-                  density="compact"
-                >
-                </v-text-field>
               </td>
               <td>
                 <v-text-field
@@ -134,8 +112,8 @@
                 {{ item.drug?.mrp || 0 }}
               </td>
               <td class="text-right">
-                <span >
-                  {{ formateAmount((item.qty * item.drug?.mrp)||0) }}
+                <span>
+                  {{ formateAmount(item.qty * item.drug?.mrp || 0) }}
                 </span>
               </td>
               <td class="text-center">
@@ -151,12 +129,22 @@
           </tbody>
           <tfoot>
             <tr>
-              <td colspan="2" rowspan="4"></td>
+              <td colspan="1" rowspan="4"></td>
               <td colspan="2" class="text-right font-weight-bold py-2 pr-3">
                 Total
               </td>
-              <td class="text-right font-weight-bold py-2">
+              <td class="text-right font-weight-bold p-2">
                 {{ formateAmount(order_total) }}
+              </td>
+              <td class="text-center">
+                <v-btn
+                  density="compact"
+                  icon="mdi-plus"
+                  variant="outlined"
+                  color="primary"
+                  flat=""
+                  @click="appendNewEmptyRow"
+                ></v-btn>
               </td>
             </tr>
             <!-- discount row -->
@@ -180,6 +168,7 @@
               <td class="text-right font-weight-bold py-2">
                 -{{ formateAmount(discount_amount) }}
               </td>
+              <td></td>
             </tr>
             <!-- Raounf off -->
             <tr>
@@ -189,6 +178,7 @@
               <td class="text-right font-weight-bold py-2">
                 {{ formateAmount(roundoff_amount) }}
               </td>
+              <td></td>
             </tr>
             <!-- agrand total -->
             <tr>
@@ -198,21 +188,12 @@
               <td class="text-right font-weight-bold py-2">
                 {{ formateAmount(getInvoiceTotal()) }}
               </td>
+              <td></td>
             </tr>
             <!-- end calc -->
           </tfoot>
         </table>
         <!--  -->
-        <div class="text-right pt-3">
-          <v-btn
-            class="text-capitalize ml-3"
-            variant="outlined"
-            color="primary"
-            @click="appendNewEmptyRow"
-          >
-            Add More
-          </v-btn>
-        </div>
       </div>
       <!-- order item end -->
 
@@ -287,7 +268,8 @@ export default defineComponent({
   name: "AddDrugView",
   components: {},
   data: () => ({
-    valid: false, // form validation
+    valid: false,
+    invoice_table_id: "", // form validation
     btn_loading: false,
     patient_list: [],
     patient_search: "",
@@ -311,9 +293,12 @@ export default defineComponent({
     discount_value: 0,
     discount_amount: 0,
   }),
-  mounted() {
-    if (this.$route.params.id) this.patient_table_id = this.$route.params.id;
-    else this.getPatientList();
+  created() {
+    if (this.$route.params.id) {
+      this.invoice_table_id = this.$route.params.id;
+      this.getInvoiceDetails();
+    }
+    this.getPatientList();
   },
   methods: {
     getDrugList() {
@@ -354,6 +339,41 @@ export default defineComponent({
         finallyHandler
       );
     },
+    getInvoiceDetails() {
+      var params = {
+        invoice_table_id: this.invoice_table_id,
+      };
+      const successHandler = (response) => {
+        this.invoice_data = response.data.invoice_data;
+        this.invoice_items = response.data.invoice_items;
+
+        this.order_item_list = [];
+        response.data.invoice_items.forEach((item) => {
+          this.order_item_list.push({
+            drug: {
+              drug_name: item.drug_name,
+              drug_table_id: item.drug_table_id,
+              id: item.id,
+              mrp: item.mrp,
+            },
+            expiry_date: item.expiry_date,
+            qty: item.quantity,
+          });
+        });
+        this.patient = {
+          name: this.invoice_data.patient_name,
+          patient_table_id: this.invoice_data.patient_table_id,
+        };
+      };
+      this.request_GET(
+        this,
+        this.$urls.GET_INVOICE_DETAILS,
+        params,
+        successHandler,
+        null,
+        null
+      );
+    },
     appendNewEmptyRow() {
       this.order_item_list.push({
         drug_search_query: "",
@@ -372,17 +392,18 @@ export default defineComponent({
     },
     async createPurchaseOrder() {
       await this.$refs.purchase_order_form.validate();
-      console.log("this.$refs.prescription_form.validate()==", this.valid);
       if (!this.valid) return false;
       this.btn_loading = true;
 
-      console.log(this.patient);
       var form = new URLSearchParams();
       form.append("order_item_list", JSON.stringify(this.order_item_list));
-
-      // dummy data
-      form.append("discount_value", this.discount_value);
-      form.append("patient_table_id", this.patient);
+      form.append(
+        "discount_value",
+        isNaN(this.discount_value) ? 0 : this.discount_value
+      );
+      form.append("patient_table_id", parseInt(this.patient.patient_table_id));
+      if (this.invoice_table_id)
+        form.append("invoice_table_id", parseInt(this.invoice_table_id));
 
       const successHandler = (response) => {
         this.showSnakeBar(
@@ -421,9 +442,7 @@ export default defineComponent({
         event.preventDefault();
       }
     },
-    setDrugMRP(index,drug_table_id){
-
-    },
+    setDrugMRP(index, drug_table_id) {},
     getInvoiceTotal() {
       let order_total = 0;
       this.order_item_list.forEach((obj) => {

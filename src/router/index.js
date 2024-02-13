@@ -132,9 +132,16 @@ const routes = [
       },
       // invoice
       {
-        path: '/create-invoice/',
+        path: '/invoice/create/',
         name: 'create_invoice',
         meta: {requiresAuth: true, title: "Create Invoice", show_back_btn: true},
+        component: () => import(/* webpackChunkName: "invoice" */ '../views/invoice/CreateInvoice.vue')
+      },
+      // invoice
+      {
+        path: '/invoice/edit/:id',
+        name: 'edit_invoice',
+        meta: {requiresAuth: true, title: "Edit Invoice", show_back_btn: true},
         component: () => import(/* webpackChunkName: "invoice" */ '../views/invoice/CreateInvoice.vue')
       },
       {

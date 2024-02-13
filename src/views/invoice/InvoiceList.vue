@@ -29,7 +29,6 @@
             class="mt-4"
             v-model="page_number"
             :length="total_page_count"
-            :total-visible="8"
             density="comfortable"
             color="primary"
             @update:modelValue="getInvoiceList"
@@ -59,6 +58,7 @@
         {title: "Amount", value: "invoice_total"},
         {
           title: "", type: "btn", class: "text-right", btn_list: [
+          {btn_icon: "mdi-pencil", route_name: '/invoice/edit/', router_key: "invoice_table_id", color: 'primary'},
           {
             btn_icon: "mdi-chevron-right",
             route_name: '/invoice-details/',
@@ -66,7 +66,6 @@
             size: "25",
             color: 'primary'
           },
-            // {btn_icon: "mdi-pencil", route_name: '/drugs/edit/', router_key: "drug_table_id", color: 'primary'},
             // {
             //   btn_icon: "mdi-delete-empty",
             //   route_name: '/purchase_order/',
