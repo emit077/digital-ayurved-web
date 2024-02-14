@@ -53,7 +53,7 @@
       total_page_count: 1,
       search_query: "",
       headers: [
-        {title: "Order Id", value: "purchase_order_table_id", class: "fw-450"},
+        {title: "Order Id", value: "order_id", class: "fw-450"},
         {title: "Vendor", value: ["vendor_name", "vendor_contact_number"]},
         {title: "Order Date", value: "order_date"},
         {title: "Amount", value: "order_total"},

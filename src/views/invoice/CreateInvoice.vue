@@ -11,7 +11,7 @@
           <label class="ml-1">{{ $lang.PATIENT }}</label>
           <v-autocomplete
             v-model="patient"
-            v-model:search-input="patient_search"
+            v-model:search.sync="patient_search"
             :rules="[$rules.REQUIRED_FIELD('')]"
             :items="patient_list"
             variant="outlined"
@@ -23,7 +23,7 @@
             hide-details
             return-object
             @focus="getPatientList"
-            @keydown="getPatientList"
+            @keyup="getPatientList"
           >
             <template v-slot:item="{ props, item }">
               <v-list-item
@@ -59,37 +59,35 @@
               <td>
                 <v-autocomplete
                   v-model="item.drug"
-                  v-model:search-input="item.drug_search_query"
+                  v-model:search.sync="item.drug_search_query"
                   :items="drug_list"
                   :rules="[$rules.REQUIRED_FIELD('')]"
                   item-title="drug_name"
-                  item-value="drug_table_id"
+                  item-value="order_items_table_id"
                   placeholder="Drug"
                   variant="outlined"
                   density="compact"
                   class="custom-combobox mt-1"
                   hide-details
                   return-object
-                  @focus="getDrugList"
-                  @keydown="getDrugList"
+                  @focus="getDrugList(item.drug_search_query)"
+                  @keyup="getDrugList(item.drug_search_query)"
                 >
                   <template v-slot:item="{ props, item }">
                     <v-list-item
-                      v-if="typeof item.raw !== 'object'"
                       v-bind="props"
-                    ></v-list-item>
-                    <v-list-item
-                      v-else
-                      v-bind="props"
-                      :title="item.raw.drug_name"
-                      :subtitle="item.raw.brand"
+                      :title="
+                        item.raw.drug_name +
+                        '-' +
+                        item.raw.brand_name +
+                        ' |₹' +
+                        item.raw.mrp
+                      "
+                      :subtitle="
+                        item.raw.expiry_date + ' #' + item.raw.available_qty
+                      "
                     ></v-list-item>
                   </template>
-                  <!-- <template v-slot:selection="data">
-                    <span>
-                      {{ data.item.raw.drug_name }}
-                    </span>
-                  </template> -->
                 </v-autocomplete>
               </td>
               <td>
@@ -100,7 +98,7 @@
                   single-line
                   class="mt-1"
                   shaped
-                  :rules="[$rules.REQUIRED_FIELD('')]"
+                  :rules="[$rules.REQUIRED_FIELD('',0,item.drug?.available_qty)]"
                   density="compact"
                   hide-details
                   maxlength="4"
@@ -301,9 +299,9 @@ export default defineComponent({
     this.getPatientList();
   },
   methods: {
-    getDrugList() {
+    getDrugList(drug_search_query = "") {
       var params = {
-        search_query: this.drug_search_query,
+        search_query: drug_search_query,
         page_number: this.page_number,
       };
       const successHandler = (response) => {
@@ -311,7 +309,7 @@ export default defineComponent({
       };
       this.request_GET(
         this,
-        this.$urls.DRUGS_LIST,
+        this.$urls.LIST_SALES_DRUGS,
         params,
         successHandler,
         null,
@@ -344,10 +342,11 @@ export default defineComponent({
         invoice_table_id: this.invoice_table_id,
       };
       const successHandler = (response) => {
-        this.invoice_data = response.data.invoice_data;
+        this.order_item_list = [];
+        let invoice_data = response.data.invoice_data;
+        this.discount_value = invoice_data.discount_value;
         this.invoice_items = response.data.invoice_items;
 
-        this.order_item_list = [];
         response.data.invoice_items.forEach((item) => {
           this.order_item_list.push({
             drug: {
@@ -355,14 +354,15 @@ export default defineComponent({
               drug_table_id: item.drug_table_id,
               id: item.id,
               mrp: item.mrp,
+              order_items_table_id: item.order_items_table_id,
             },
             expiry_date: item.expiry_date,
             qty: item.quantity,
           });
         });
         this.patient = {
-          name: this.invoice_data.patient_name,
-          patient_table_id: this.invoice_data.patient_table_id,
+          name: invoice_data.patient_name,
+          patient_table_id: invoice_data.patient_table_id,
         };
       };
       this.request_GET(
@@ -442,7 +442,6 @@ export default defineComponent({
         event.preventDefault();
       }
     },
-    setDrugMRP(index, drug_table_id) {},
     getInvoiceTotal() {
       let order_total = 0;
       this.order_item_list.forEach((obj) => {

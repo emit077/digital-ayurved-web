@@ -52,8 +52,9 @@
             <tr>
               <td style="min-width: 30%">{{ $lang.DRUG }}</td>
               <td style="min-width: 10%">{{ $lang.EXPIRY_DATE }}</td>
-              <td style="min-width: 10%">{{ $lang.QTY }}</td>
-              <td style="min-width: 10%">{{ $lang.UNIT_PRICE }}</td>
+              <td style="min-width: 7%">{{ $lang.QTY }}</td>
+              <td style="min-width: 7%">{{ $lang.MRP }}</td>
+              <td style="min-width: 7%">{{ $lang.UNIT_PRICE }}</td>
               <td class="text-right" style="min-width: 10%">
                 {{ $lang.TOTAL }}
               </td>
@@ -77,6 +78,7 @@
                   item-value="drug_table_id"
                   @focus="getDrugList"
                   @keydown="getDrugList"
+                  return-object
                 >
                   <template v-slot:item="{ props, item }">
                     <v-list-item
@@ -126,6 +128,22 @@
               </td>
               <td>
                 <v-text-field
+                  v-model="item.mrp"
+                  :placeholder="$lang.MRP"
+                  variant="outlined"
+                  single-line
+                  class="mt-1"
+                  shaped
+                  :rules="[$rules.REQUIRED_FIELD('')]"
+                  density="compact"
+                  hide-details
+                  maxlength="5"
+                  @keydown="restrictChar($event)"
+                >
+                </v-text-field>
+              </td>
+              <td>
+                <v-text-field
                   v-model="item.unit_price"
                   :placeholder="$lang.UNIT_PRICE"
                   variant="outlined"
@@ -141,8 +159,8 @@
                 </v-text-field>
               </td>
               <td class="text-right">
-                <span v-if="item.qty && item.unit_price">
-                  {{ formateAmount(item.qty * item.unit_price) }}
+                <span>
+                  {{ formateAmount((item.qty && item.unit_price)?item.qty * item.unit_price:0) }}
                 </span>
               </td>
               <td class="text-center">
@@ -158,49 +176,26 @@
           </tbody>
           <tfoot>
             <tr>
-              <td colspan="2" rowspan="4"></td>
+              <td colspan="3" rowspan="4"></td>
               <td colspan="2" class="text-right font-weight-bold py-2 pr-3">
                 Total
               </td>
               <td class="text-right font-weight-bold py-2">
                 {{ getOrderTotal() }}
               </td>
-            </tr>
-            <!-- discount row -->
-            <tr>
-              <td colspan="2" class="text-right font-weight-bold py-2 pr-3">
-                Dicsount
+              <td class="text-center">
+                <v-btn
+                  density="compact"
+                  icon="mdi-plus"
+                  variant="outlined"
+                  color="primary"
+                  flat=""
+                  @click="appendNewEmptyRow"
+                ></v-btn>
               </td>
-              <td class="text-right font-weight-bold py-2">(-)</td>
             </tr>
-            <!-- Raounf off -->
-            <tr>
-              <td colspan="2" class="text-right font-weight-bold py-2 pr-3">
-                Round off
-              </td>
-              <td class="text-right font-weight-bold py-2">(-)</td>
-            </tr>
-            <!-- agrand total -->
-            <tr>
-              <td colspan="2" class="text-right font-weight-bold py-2 pr-3">
-                Invoice Amount
-              </td>
-              <td class="text-right font-weight-bold py-2"></td>
-            </tr>
-            <!-- end calc -->
           </tfoot>
         </table>
-        <!--  -->
-        <div class="text-right pt-3">
-          <v-btn
-            class="text-capitalize ml-3"
-            variant="outlined"
-            color="primary"
-            @click="appendNewEmptyRow"
-          >
-            Add More
-          </v-btn>
-        </div>
       </div>
       <!-- order item end -->
 
@@ -282,6 +277,7 @@ export default defineComponent({
         loading: false,
         drug: null,
         expiry_date: "",
+        mrp: "",
         unit_price: "",
         qty: "",
       },
@@ -356,10 +352,6 @@ export default defineComponent({
       form.append("order_item_list", JSON.stringify(this.order_item_list));
 
       // dummy data
-      form.append("patient_table_id", 1);
-      form.append("discount_value", 10);
-      form.append("patient_table_id", 1);
-
       const successHandler = (response) => {
         this.showSnakeBar(
           "success",
