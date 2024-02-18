@@ -13,6 +13,7 @@ export default {
   CANCEL: "Cancel",
 
   ADD_NEW: "Add New",
+  CREATE_PURCHASE_ORDER: "Create Purchase Order",
   EDIT: "Edit",
   EDIT_PROFILE: "Edit Profile",
 

@@ -18,7 +18,7 @@
             density="compact"
             placeholder="Select Patient"
             class="custom-combobox"
-            item-title="name"
+            item-title="patient_name"
             item-value="patient_table_id"
             hide-details
             return-object
@@ -33,7 +33,9 @@
               <v-list-item
                 v-else
                 v-bind="props"
-                :title="item.raw.name + '(' + item.raw.patient_table_id + ')'"
+                :title="
+                  item.raw.patient_name + '(' + item.raw.patient_table_id + ')'
+                "
                 :subtitle="item.raw.mobile"
               ></v-list-item>
             </template>
@@ -98,7 +100,9 @@
                   single-line
                   class="mt-1"
                   shaped
-                  :rules="[$rules.REQUIRED_FIELD('',0,item.drug?.available_qty)]"
+                  :rules="[
+                    $rules.REQUIRED_FIELD('', 0, item.drug?.available_qty),
+                  ]"
                   density="compact"
                   hide-details
                   maxlength="4"
@@ -292,11 +296,11 @@ export default defineComponent({
     discount_amount: 0,
   }),
   created() {
+    this.getPatientList();
     if (this.$route.params.id) {
       this.invoice_table_id = this.$route.params.id;
       this.getInvoiceDetails();
     }
-    this.getPatientList();
   },
   methods: {
     getDrugList(drug_search_query = "") {

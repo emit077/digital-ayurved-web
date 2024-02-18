@@ -24,9 +24,9 @@
       <table>
         <thead>
           <tr>
-            <td >{{ $lang.DRUG }}</td>
-            <td class="text-right" >{{ $lang.QTY }}</td>
-            <td class="text-right" style="min-width: 15%" >{{ $lang.MRP }}</td>
+            <td>{{ $lang.DRUG }}</td>
+            <td class="text-right">{{ $lang.QTY }}</td>
+            <td class="text-right" style="min-width: 15%">{{ $lang.MRP }}</td>
             <td class="text-right" style="min-width: 20%">
               {{ $lang.TOTAL }}
             </td>
@@ -83,6 +83,8 @@
       <!--  -->
     </div>
     <!-- order item end -->
+    <!--  -->
+    <InvoiceTemplate></InvoiceTemplate>
   </div>
 </template>
 <style lang="scss">
@@ -131,7 +133,7 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "InvoiceDetails",
-  components: {},
+  components: {  },
   data: () => ({
     invoice_table_id: "",
     invoice_data: {},

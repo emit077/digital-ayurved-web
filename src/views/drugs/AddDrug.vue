@@ -1,84 +1,122 @@
 <template>
   <div>
-    <v-form ref="add_drug_form" v-model="valid" lazy-validation @submit.prevent="addDrug()">
+    <v-form
+      ref="add_drug_form"
+      v-model="valid"
+      lazy-validation
+      @submit.prevent="addDrug()"
+    >
       <v-row no-gutters>
-        <v-col cols="12" md="5" :class="!$vuetify.display.mobile?'px-4':''">
+        <v-col cols="12" md="5" :class="!$vuetify.display.mobile ? 'px-4' : ''">
           <label class="ml-1">{{ $lang.DRUG_NAME }}</label>
           <v-text-field
-              v-model="form.drug_name"
-              :label="$lang.DRUG_NAME"
-              variant="outlined"
-              single-line
-              class="mt-1"
-              shaped
-              :rules="[$rules.REQUIRED_FIELD($lang.DRUG_NAME)]"
-              density="compact"
+            v-model="form.drug_name"
+            :label="$lang.DRUG_NAME"
+            variant="outlined"
+            single-line
+            class="mt-1"
+            shaped
+            :rules="[$rules.REQUIRED_FIELD($lang.DRUG_NAME)]"
+            density="compact"
           >
           </v-text-field>
         </v-col>
-        <v-col cols="12" md="5" :class="!$vuetify.display.mobile?'px-4':''">
+        <v-col cols="12" md="5" :class="!$vuetify.display.mobile ? 'px-4' : ''">
           <label class="ml-1">{{ $lang.BRAND }}</label>
-          <v-text-field
-              v-model="form.brand"
-              :label="$lang.BRAND"
-              variant="outlined"
-              single-line
-              class="mt-1"
-              shaped
-              :rules="[$rules.REQUIRED_FIELD($lang.BRAND)]"
-              density="compact"
+
+          <v-autocomplete
+            v-model="form.brand"
+            v-model:search.sync="brand_search_query"
+            :rules="[$rules.REQUIRED_FIELD('')]"
+            :items="brand_list"
+            variant="outlined"
+            density="compact"
+            class="custom-combobox"
+            item-title="brand_name"
+            item-value="brand_table_id"
+            hide-details
+            @focus="getBrandList"
+            @keyup="getBrandList"
           >
-          </v-text-field>
+          </v-autocomplete>
         </v-col>
-        <v-col cols="12" md="5" :class="!$vuetify.display.mobile?'px-4':''">
+        <v-col cols="12" md="5" :class="!$vuetify.display.mobile ? 'px-4' : ''">
           <label class="ml-1">{{ $lang.FORMULA }}</label>
           <v-text-field
-              v-model="form.formula"
-              :label="$lang.FORMULA"
-              variant="outlined"
-              single-line
-              class="mt-1"
-              shaped
-              :rules="[$rules.REQUIRED_FIELD($lang.FORMULA)]"
-              density="compact"
+            v-model="form.formula"
+            :label="$lang.FORMULA"
+            variant="outlined"
+            single-line
+            class="mt-1"
+            shaped
+            :rules="[$rules.REQUIRED_FIELD($lang.FORMULA)]"
+            density="compact"
           >
           </v-text-field>
         </v-col>
-        <v-col cols="12" md="5" :class="!$vuetify.display.mobile?'px-4':''">
+        <v-col cols="12" md="5" :class="!$vuetify.display.mobile ? 'px-4' : ''">
           <label class="ml-1">{{ $lang.FORMULATION_TYPE }}</label>
-          <v-text-field
-              v-model="form.formulation"
-              :label="$lang.FORMULATION_TYPE"
-              variant="outlined"
-              single-line
-              class="mt-1"
-              shaped
-              density="compact"
+
+          <v-autocomplete
+            v-model="form.formulation"
+            v-model:search.sync="formulation_search_query"
+            :rules="[$rules.REQUIRED_FIELD('')]"
+            :items="formulation_list"
+            variant="outlined"
+            density="compact"
+            class="custom-combobox"
+            item-title="formulation_type"
+            item-value="formulation_table_id"
+            hide-details
+            @focus="getFormationList"
+            @keyup="getFormationList"
           >
-          </v-text-field>
+          </v-autocomplete>
+          <!-- <v-text-field
+            v-model="form.formulation"
+            :label="$lang.FORMULATION_TYPE"
+            variant="outlined"
+            single-line
+            class="mt-1"
+            shaped
+            density="compact"
+          >
+          </v-text-field> -->
         </v-col>
-        <v-col cols="12" md="5" :class="!$vuetify.display.mobile?'px-4':''">
+        <v-col cols="12" md="5" :class="!$vuetify.display.mobile ? 'px-4' : ''">
           <label class="ml-1">{{ $lang.ANUPAAN }}</label>
           <v-text-field
-              v-model="form.anupaan"
-              :label="$lang.ANUPAAN"
-              variant="outlined"
-              single-line
-              class="mt-1"
-              shaped
-              density="compact"
+            v-model="form.anupaan"
+            :label="$lang.ANUPAAN"
+            variant="outlined"
+            single-line
+            class="mt-1"
+            shaped
+            density="compact"
           >
           </v-text-field>
         </v-col>
       </v-row>
       <v-row no-gutters>
         <v-col cols="12" md="10" class="text-center">
-          <v-btn :loading="btn_loading" class="register-action-btn mx-2" color="primary"
-                 height="50px" width="300px" type="submit">
+          <v-btn
+            :loading="btn_loading"
+            class="register-action-btn mx-2"
+            color="primary"
+            height="50px"
+            width="300px"
+            type="submit"
+          >
             <span class="btn_text">{{ $lang.SAVE }}</span>
           </v-btn>
-          <v-btn class="register-action-btn mx-2" color="primary"
-                 height="50px" width="300px" variant="outlined" @click="$router.go(-1)">
+          <v-btn
+            class="register-action-btn mx-2"
+            color="primary"
+            height="50px"
+            width="300px"
+            variant="outlined"
+            @click="$router.go(-1)"
+          >
             <span class="btn_text">{{ $lang.CANCEL }}</span>
           </v-btn>
         </v-col>
@@ -88,10 +126,10 @@
 </template>
 
 <script>
-import {defineComponent} from 'vue';
+import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: 'AddDrugView',
+  name: "AddDrugView",
   components: {},
   data: () => ({
     drug_table_id: null,
@@ -105,23 +143,28 @@ export default defineComponent({
     },
     show_password: false,
     btn_loading: false,
+    brand_search_query: "",
+    brand_list: "",
+    formulation_list: "",
+    formulation_search_query: "",
   }),
   created() {
     if (this.$route.params.id) {
-      this.drug_table_id = this.$route.params.id
-      this.getDrugDetails()
+      this.drug_table_id = this.$route.params.id;
+      this.getDrugDetails();
     }
   },
   methods: {
     async addDrug() {
-      await this.$refs.add_drug_form.validate()
-      console.log(this.valid)
-      if (!this.valid)
-        return false
-      this.btn_loading = true
+      await this.$refs.add_drug_form.validate();
+      console.log(this.valid);
+      if (!this.valid) return false;
+      this.btn_loading = true;
       var form = new URLSearchParams();
 
-      this.drug_table_id ? form.append("drug_table_id", this.drug_table_id) : ''
+      this.drug_table_id
+        ? form.append("drug_table_id", this.drug_table_id)
+        : "";
 
       form.append("drug_name", this.form.drug_name);
       form.append("brand", this.form.brand);
@@ -131,30 +174,89 @@ export default defineComponent({
 
       const successHandler = (response) => {
         if (response.data.success) {
-          this.$refs.add_drug_form.reset()
-          this.showSnakeBar('success', this.drug_table_id ? "Updated Successfully" : "Added Successfully")
-          this.$router.push({name: 'drug_list'})
+          this.$refs.add_drug_form.reset();
+          this.showSnakeBar(
+            "success",
+            this.drug_table_id ? "Updated Successfully" : "Added Successfully"
+          );
+          this.$router.push({ name: "drug_list" });
         }
       };
       const finallyHandler = () => {
-        this.btn_loading = false
+        this.btn_loading = false;
       };
-      this.request_POST(this, this.$urls.DRUGS_ADD, form, successHandler, null, null, finallyHandler)
-
+      this.request_POST(
+        this,
+        this.$urls.DRUGS_ADD,
+        form,
+        successHandler,
+        null,
+        null,
+        finallyHandler
+      );
     },
     getDrugDetails() {
       var params = {
         drug_table_id: this.drug_table_id,
-      }
+      };
       const successHandler = (response) => {
-        this.form = response.data
+        this.form = response.data;
       };
       const finallyHandler = () => {
-        this.btn_loading = false
+        this.btn_loading = false;
       };
-      this.request_GET(this, this.$urls.DRUGS_DETAILS, params, successHandler, null, null, finallyHandler)
-    }
-  }
-
+      this.request_GET(
+        this,
+        this.$urls.DRUGS_DETAILS,
+        params,
+        successHandler,
+        null,
+        null,
+        finallyHandler
+      );
+    },
+    getBrandList() {
+      var params = {
+        search_query: this.brand_search_query,
+        page_number: this.page_number,
+      };
+      const successHandler = (response) => {
+        this.brand_list = response.data.brand_list;
+      };
+      const finallyHandler = () => {
+        this.btn_loading = false;
+      };
+      this.request_GET(
+        this,
+        this.$urls.BRAND_LIST,
+        params,
+        successHandler,
+        null,
+        null,
+        finallyHandler
+      );
+    },
+    getFormationList() {
+      var params = {
+        search_query: this.formulation_search_query,
+        page_number: this.page_number,
+      };
+      const successHandler = (response) => {
+        this.formulation_list = response.data.formulation_list;
+      };
+      const finallyHandler = () => {
+        this.btn_loading = false;
+      };
+      this.request_GET(
+        this,
+        this.$urls.FORMULATION_LIST,
+        params,
+        successHandler,
+        null,
+        null,
+        finallyHandler
+      );
+    },
+  },
 });
 </script>

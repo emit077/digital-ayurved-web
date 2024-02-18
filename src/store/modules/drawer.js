@@ -12,6 +12,13 @@ export const state = {
       // access_by: [keys.ACCOUNT_ADMIN, keys.ACCOUNT_SUPER_ADMIN],
     },
     {
+      title: "Inventory",
+      url: { name: "inventory" },
+      is_active_tab: false,
+      icon: "mdi-shopping-search",
+      // access_by: [keys.ACCOUNT_STUDENT],
+    },
+    {
       title: "Invoice",
       url: { name: "invoice_list" },
       is_active_tab: false,

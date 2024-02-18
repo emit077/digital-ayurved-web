@@ -21,9 +21,12 @@ export default {
   DRUGS_DELETE: "/drugs/delete/",
 
   // inventory
+  INVENTORY_OVERVIEW: "/inventory/overview/",
+  DASHBOARD_OVERVIEW: "/inventory/dashboard-overview/",
   CREATE_PURCHASE_ORDER: "/inventory/create-purchase-order/",
   LIST_PURCHASE_ORDER: "/inventory/list-purchase-order/",
   LIST_SALES_DRUGS: "/inventory/list-sales-drugs/",
+  GET_INVOICE: "/inventory/get-invoice/",
 
   LIST_INVOICE: "/inventory/list-invoice/",
   CREATE_INVOICE: "/inventory/create-invoice/",
@@ -42,4 +45,6 @@ export default {
 
   // MASTER api
   VENDOR_LIST: "/master/vendor-list/",
+  BRAND_LIST: "/master/brand-list/",
+  FORMULATION_LIST: "/master/formulation-list/",
 };

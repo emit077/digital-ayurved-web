@@ -11,7 +11,7 @@
           <label class="ml-1">{{ $lang.VENDOR }}</label>
           <v-autocomplete
             v-model="vendor"
-            v-model:search-input="vendor_search_query"
+            v-model:search.sync="vendor_search_query"
             :rules="[$rules.REQUIRED_FIELD('')]"
             :items="vendor_list"
             variant="outlined"

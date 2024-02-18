@@ -34,6 +34,7 @@
     >
       <v-tab :value="1">Personal Info</v-tab>
       <v-tab :value="2">Treatment History</v-tab>
+      <v-tab :value="3">Invoice History</v-tab>
     </v-tabs>
     <v-window v-model="tab">
       <v-window-item
@@ -68,6 +69,15 @@
       </v-window-item>
       <v-window-item
           :value="2">
+        <v-card class="tab-card">
+          <v-container fluid>
+            <data-table :items="treatment_history" :headers="headers" @delete="clickFunction"/>
+            <v-divider></v-divider>
+          </v-container>
+        </v-card>
+      </v-window-item>
+      <v-window-item
+          :value="3">
         <v-card class="tab-card">
           <v-container fluid>
             <data-table :items="treatment_history" :headers="headers" @delete="clickFunction"/>

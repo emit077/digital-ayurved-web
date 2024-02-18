@@ -59,6 +59,15 @@
         {
           title: "", type: "btn", class: "text-right", btn_list: [
           {btn_icon: "mdi-pencil", route_name: '/invoice/edit/', router_key: "invoice_table_id", color: 'primary'},
+        
+          {
+            btn_icon: "mdi-arrow-collapse-down",
+            route_name:"/inventory/get-invoice/?invoice_table_id=",
+            btn_type: "pdf-btn",
+            router_key: "invoice_table_id",
+            size: "20",
+            color: 'primary'
+          },
           {
             btn_icon: "mdi-chevron-right",
             route_name: '/invoice-details/',
