@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="text-right mb-5">
+    <div class="text-right mb-8">
       <router-link :to="{ name: 'create_purchase_order' }">
         <v-btn color="primary" prepend-icon="mdi-plus">{{
           $lang.CREATE_PURCHASE_ORDER
@@ -9,19 +9,19 @@
     </div>
 
     <v-row class="">
-      <v-col cols="12" md="6" xl="6" class="overview-card">
+      <v-col cols="12" md="6" xl="6" class="overview-card mb-6">
         <list-item title="Near Expiry" :drug_list="near_expiry"></list-item>
       </v-col>
-      <v-col cols="12" md="6" xl="6" class="overview-card">
+      <v-col cols="12" md="6" xl="6" class="overview-card mb-6">
         <list-item title="Expired" :drug_list="expired"></list-item>
       </v-col>
-      <v-col cols="12" md="6" xl="6" class="overview-card">
+      <v-col cols="12" md="6" xl="6" class="overview-card mb-6">
         <list-item
           title="About to Stockout"
           :drug_list="near_stock_out"
         ></list-item>
       </v-col>
-      <v-col cols="12" md="6" xl="6" class="overview-card">
+      <v-col cols="12" md="6" xl="6" class="overview-card mb-6">
         <list-item title="Stockout" :drug_list="stock_out"></list-item>
       </v-col>
     </v-row>

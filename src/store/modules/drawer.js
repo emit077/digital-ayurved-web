@@ -8,7 +8,7 @@ export const state = {
       title: "Overview",
       url: { name: "overview" },
       is_active_tab: false,
-      icon: "mdi-home",
+      icon: "mdi-view-dashboard",
       // access_by: [keys.ACCOUNT_ADMIN, keys.ACCOUNT_SUPER_ADMIN],
     },
     {
@@ -22,7 +22,7 @@ export const state = {
       title: "Invoice",
       url: { name: "invoice_list" },
       is_active_tab: false,
-      icon: "mdi-bottle-tonic-plus",
+      icon: "mdi-file-document-outline",
       // access_by: [keys.ACCOUNT_STUDENT],
     },
     {
@@ -36,14 +36,14 @@ export const state = {
       title: "Doctors",
       url: { name: "doctor_list" },
       is_active_tab: false,
-      icon: "mdi-stethoscope",
+      icon: "mdi-doctor",
       // access_by: [keys.ACCOUNT_STUDENT],
     },
     {
       title: "Patients",
       url: { name: "patients_list" },
       is_active_tab: false,
-      icon: "mdi-human-cane",
+      icon: "mdi-bed",
       // access_by: [keys.ACCOUNT_STUDENT],
     },
     {

@@ -1,7 +1,6 @@
 import axios from "axios";
 import axios_instance from "@/helper/axios-helper";
 
-
 let CancelToken = axios.CancelToken;
 let source = CancelToken.source();
 
@@ -130,7 +129,7 @@ export default {
         this.CryptoJS.enc.Utf8
       );
     },
-    formateAmount(x) {
+    formateAmount(x, formate = null) {
       x = x.toString();
       let dec = "00";
       if (x.split(".").length === 2) {
@@ -142,7 +141,8 @@ export default {
       var otherNumbers = x.substring(0, x.length - 3);
       if (otherNumbers != "") lastThree = "," + lastThree;
       var res = otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree;
-      return  res + (dec ? "." + dec : "");
+      if (formate == "Int") return parseInt(res|0);
+      return res + (dec ? "." + dec : "");
     },
   },
 };

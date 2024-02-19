@@ -26,7 +26,7 @@ thead tr th:last-child {
         </th>
       </tr>
     </thead>
-    <tbody v-if="items.length > 0">
+    <tbody v-if="items.length > 0" class="bg-white">
       <tr v-for="(item, i) in items" :key="i">
         <td v-for="(header, j) in headers" :key="j">
           <!-- btns -->

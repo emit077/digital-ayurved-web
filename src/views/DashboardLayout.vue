@@ -17,7 +17,7 @@
 </template>
 <style scoped lang="scss">
 .bg-style {
-  background-color: rgb(250, 251, 253);
+  background-color: #F0F2F5;
 }
 </style>
 <script>

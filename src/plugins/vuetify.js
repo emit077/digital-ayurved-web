@@ -33,9 +33,9 @@ export default createVuetify({
       theme_light: {
         dark: false,
         colors: {
-          background: "#FFFFFF",
-          surface: "#FFFFFF",
-          primary: "#6200EE",
+          background: "#F0F2F5",
+          surface: "#F0F2F5",
+          primary: "#1A73E8",
           secondary: "#03DAC6",
           error: "#B00020",
           info: "#2196F3",

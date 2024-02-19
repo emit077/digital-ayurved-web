@@ -17,12 +17,11 @@
             variant="outlined"
             @keyup="getPatientList"
             density="compact"
+            class="bg-white"
         ></v-text-field>
       </v-col>
     </v-row>
-
     <!--    -->
-
 
     <div>
       <data-table :items="patient_list" :headers="headers"/>

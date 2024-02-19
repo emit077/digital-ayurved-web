@@ -1,14 +1,14 @@
 <style lang="scss" scoped>
 .btn-box {
   width: 35px;
-  background-color: transparent;
+  background-color: #F0F2F5;
   display: inline-block;
 }
 
 @media screen and (max-width: 1260px) {
   .btn-box {
     width: 30px;
-    background-color: transparent;
+    background-color: #F0F2F5;
     display: inline-block;
     //margin-left: 20px;
   }
@@ -22,7 +22,7 @@
 }
 </style>
 <template>
-  <v-app-bar app color="rgb(250, 251, 253)" class="elevation-0">
+  <v-app-bar app color="#F0F2F5" class="elevation-0">
     <div class="btn-box">
       <v-btn color="primary" size="35" icon="" text depressed fab class="pa-0" v-if="$route.meta.show_back_btn"
              @click="$router.go(-1)">

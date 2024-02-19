@@ -16,6 +16,7 @@
             variant="outlined"
             @keyup="getDoctorList"
             density="compact"
+            class="bg-white"
         ></v-text-field>
       </v-col>
     </v-row>

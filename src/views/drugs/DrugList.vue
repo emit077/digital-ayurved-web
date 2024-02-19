@@ -19,6 +19,7 @@
           variant="outlined"
           @keyup="getDrugList"
           density="compact"
+          class="bg-white"
         ></v-text-field>
       </v-col>
     </v-row>

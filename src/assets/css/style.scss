@@ -1,3 +1,14 @@
+$drawer-text-color:rgb (255, 255, 255);
+$drawer-background:linear-gradient(195deg, rgb(66, 66, 74), rgb(25, 25, 25));
+#custom-drawer {
+  background: $drawer-background !important;
+  color: $drawer-text-color;
+}
+.v-navigation-drawer--start {
+  border-inline-end-width: 0px !important;
+}
+
+
 .v-field__input {
   --v-field-padding-start: 8px !important;
   --v-field-padding-end: 8px !important;
