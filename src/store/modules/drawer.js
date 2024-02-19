@@ -5,7 +5,7 @@ export const state = {
   flag: true,
   items: [
     {
-      title: "Overview",
+      title: "Dashboard",
       url: { name: "overview" },
       is_active_tab: false,
       icon: "mdi-view-dashboard",
@@ -13,10 +13,23 @@ export const state = {
     },
     {
       title: "Inventory",
-      url: { name: "inventory" },
       is_active_tab: false,
       icon: "mdi-shopping-search",
       // access_by: [keys.ACCOUNT_STUDENT],
+      childs: [
+        {
+          title: "Overview",
+          url: { name: "inventory" },
+          is_active_tab: false,
+          icon: "mdi-chart-pie",
+        },
+        {
+          title: "Purchase",
+          url: { name: "create_purchase_order" },
+          is_active_tab: false,
+          icon: "mdi-cart-variant",
+        },
+      ],
     },
     {
       title: "Invoice",

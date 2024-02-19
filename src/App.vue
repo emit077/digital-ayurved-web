@@ -11,13 +11,13 @@
 </style>
 
 <script>
-import SnakeBar from "@/components/dashboard-layout/SnackBar.vue"
+// import SnakeBar from "@/components/dashboard-layout/SnackBar.vue"
 
 
 export default {
   name: 'App',
   components: {
-    SnakeBar
+    // SnakeBar
   },
   data: () => ({
     //

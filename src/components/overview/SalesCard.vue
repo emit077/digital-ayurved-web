@@ -1,23 +1,22 @@
 <template>
   <div>
-    <v-card class="pa-0 bg-white">
-      <v-card-text>
-        <div class="icon-container pa-4 mt-n9 float-left">
-          <v-icon color="#fff" size="25">{{ sales_data.icon }}</v-icon>
-        </div>
-        <div class="text-right">
-          <span class="text-subtitle-2">{{ sales_data.title }}</span>
-          <p class="text-h4 font-weight-bold">
-            <span v-if="sales_data.is_amount">₹</span>{{ formateAmount(sales_data.value, "Int") }}
-          </p>
-        </div>
-        <!-- <v-divider class="mt-3"></v-divider>
+    <div class="pa-4 bg-white elevation-2">
+      <div class="icon-container pa-4 mt-n9 float-left">
+        <v-icon color="#fff" size="25">{{ sales_data.icon }}</v-icon>
+      </div>
+      <div class="text-right">
+        <span class="text-subtitle-2">{{ sales_data.title }}</span>
+        <p class="text-h4 font-weight-bold">
+          <span v-if="sales_data.is_amount">₹</span
+          >{{ formateAmount(sales_data.value, "Int") }}
+        </p>
+      </div>
+      <!-- <v-divider class="mt-3"></v-divider>
         <div class="text-right pt-2">
           <span class="text-green">{{ sales_data.analatical_value }}% </span>
           <span>than last week</span>
         </div> -->
-      </v-card-text>
-    </v-card>
+    </div>
   </div>
 </template>
 <style lang="scss" scoped>

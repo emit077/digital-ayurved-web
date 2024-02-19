@@ -10,26 +10,50 @@
         <h3 class="text-center py-5 text-white">{{ $keys.ORG_NAME }}</h3>
       </div>
       <v-divider></v-divider>
-      <v-list density="compact" nav dense class="pa-0 mt-2 bg-transparent">
-        <v-list-item
-          :to="item.url"
-          class="py-1 my-2 my-0 mx-1"
-          link
-          @click="setActiveTab(item)"
-          v-for="(item, i) in getDrawerItems"
-          :key="i"
-          :class="
-            current_tab == item.url.name
-              ? 'v-list-item--active elevation-1'
-              : ''
-          "
-        >
-          <v-list-item-avatar start class="ma-0">
-            <v-icon :icon="item.icon" color="#FFF" size="25"></v-icon>
-          </v-list-item-avatar>
-          <v-list-item-title v-text="item.title"></v-list-item-title>
-        </v-list-item>
+
+      <v-list v-model:opened="open">
+        <span v-for="(item, i) in getDrawerItems" :key="i">
+          <v-list-item
+            :prepend-icon="item.icon"
+            :title="item.title"
+            :value="item.title"
+            :to="item.url"
+            class="my-3 mx-1"
+            link
+            @click="setActiveTab(item)"
+            v-if="!item.childs"
+          ></v-list-item>
+
+          <v-list-group
+            v-else
+            :value="item.title"
+            color="#fff"
+            active-color="#fff"
+          >
+            <template v-slot:activator="{ props }">
+              <v-list-item
+                v-bind="props"
+                :prepend-icon="item.icon"
+                :title="item.title"
+                :value="item.title"
+                class="my-3 mx-1"
+              ></v-list-item>
+            </template>
+            <v-list-item
+              v-for="(obj, i) in item.childs"
+              :key="i"
+              :prepend-icon="obj.icon"
+              :title="obj.title"
+              :value="obj.title"
+              :to="obj.url"
+              class="my-3 mx-1"
+              link
+              @click="setActiveTab(obj)"
+            ></v-list-item>
+          </v-list-group>
+        </span>
       </v-list>
+
       <v-btn
         :ripple="false"
         class="logout-btn"
@@ -44,19 +68,9 @@
   </v-navigation-drawer>
 </template>
 <style lang="scss" media="screen" scoped>
-#custom-drawer .v-list-item {
-  cursor: pointer !important;
-}
-#custom-drawer .v-list-item-title {
-  font-size: 15px;
-  font-weight: 400;
-  color: #ffffff !important;
-  border-radius: 5px;
-}
-
-
-.v-list-item--active {
-  background-color: rgb(var(--v-theme-primary));
+a.v-list-item--active {
+  background-color: rgb(var(--v-theme-primary)) !important;
+  border-radius: 8px;
   .v-list-item-title {
     font-size: 15px;
     font-weight: bold;
@@ -66,7 +80,7 @@
 .left-nav-bar {
   //background-color: #e4ebff;
   border-radius: 20px;
-  height: 98%;
+  height: 99.5%;
   padding: 30px 10px;
   position: relative;
 }
@@ -87,6 +101,17 @@ export default {
       loading: false,
       mini: false,
       current_tab: "",
+      open: ["Users"],
+      admins: [
+        ["Management", "mdi-account-multiple-outline"],
+        ["Settings", "mdi-cog-outline"],
+      ],
+      cruds: [
+        ["Create", "mdi-plus-outline"],
+        ["Read", "mdi-file-outline"],
+        ["Update", "mdi-update"],
+        ["Delete", "mdi-delete"],
+      ],
     };
   },
   computed: {

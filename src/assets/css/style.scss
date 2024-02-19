@@ -1,14 +1,40 @@
-$drawer-text-color:rgb (255, 255, 255);
-$drawer-background:linear-gradient(195deg, rgb(66, 66, 74), rgb(25, 25, 25));
+$drawer-text-color: rgb (255, 255, 255);
+$drawer-background: linear-gradient(195deg, rgb(66, 66, 74), rgb(25, 25, 25));
+/* drawer style*/
 #custom-drawer {
   background: $drawer-background !important;
   color: $drawer-text-color;
+  .v-list-item__prepend {
+    color: #ffffff;
+    width: 35px;
+  }
+  .v-list-item {
+    cursor: pointer !important;
+  }
+  .v-list-item-title {
+    font-size: 15px;
+    font-weight: 400;
+    color: #ffffff !important;
+    border-radius: 5px;
+  }
+  .v-list-group__items .v-list-item {
+    padding-inline-start: 20px !important;
+  }
+
+  .v-list-group--open {
+    background: #ffffff0d !important;
+    border-radius: 10px !important;
+    padding-bottom: 1px;
+  }
+  .v-list-item__append {
+    color: #ffffff !important;
+  }
 }
-.v-navigation-drawer--start {
+
+.v-navigation-drawer--left {
   border-inline-end-width: 0px !important;
 }
-
-
+/* Drawer style end */
 .v-field__input {
   --v-field-padding-start: 8px !important;
   --v-field-padding-end: 8px !important;

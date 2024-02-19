@@ -22,7 +22,7 @@
       </v-col>
       <v-col cols="12" md="6" xl="6" class="overview-card">
         <list-item
-          title="All time Best Sellers"
+          title="All Time Best Sellers"
           :drug_list="best_sellers"
         ></list-item>
       </v-col>
