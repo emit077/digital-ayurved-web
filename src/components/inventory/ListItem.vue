@@ -1,5 +1,5 @@
 <template>
-  <div class="pa-4 bg-white elevation-2 h-100">
+  <div class="pa-4 bg-white elevation-2 h-100 border-rounded-10">
     <div class="mt-n8 text-center title-container elevation-3 mx-5">
       <span class="text-h6">{{ title }}</span>
     </div>

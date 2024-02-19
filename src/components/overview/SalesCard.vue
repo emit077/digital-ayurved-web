@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="pa-4 bg-white elevation-2">
+    <div class="pa-4 bg-white elevation-2 border-rounded-10">
       <div class="icon-container pa-4 mt-n9 float-left">
         <v-icon color="#fff" size="25">{{ sales_data.icon }}</v-icon>
       </div>
@@ -11,11 +11,13 @@
           >{{ formateAmount(sales_data.value, "Int") }}
         </p>
       </div>
-      <!-- <v-divider class="mt-3"></v-divider>
+      <div v-if="sales_data.analatical_value">
+        <v-divider class="mt-3"></v-divider>
         <div class="text-right pt-2">
           <span class="text-green">{{ sales_data.analatical_value }}% </span>
           <span>than last week</span>
-        </div> -->
+        </div>
+      </div>
     </div>
   </div>
 </template>

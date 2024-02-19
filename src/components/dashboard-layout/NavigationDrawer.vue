@@ -3,7 +3,7 @@
     v-model="this.$store.state.drawer.flag"
     app
     width="250"
-    class="pl-4"
+    class="pl-3"
   >
     <div class="left-nav-bar" id="custom-drawer">
       <div>
@@ -29,6 +29,7 @@
             :value="item.title"
             color="#fff"
             active-color="#fff"
+            :class="item.title==current_tab?'v-list-group--open':''"
           >
             <template v-slot:activator="{ props }">
               <v-list-item
@@ -48,7 +49,7 @@
               :to="obj.url"
               class="my-3 mx-1"
               link
-              @click="setActiveTab(obj)"
+              @click="setActiveTab(item)"
             ></v-list-item>
           </v-list-group>
         </span>
@@ -101,17 +102,7 @@ export default {
       loading: false,
       mini: false,
       current_tab: "",
-      open: ["Users"],
-      admins: [
-        ["Management", "mdi-account-multiple-outline"],
-        ["Settings", "mdi-cog-outline"],
-      ],
-      cruds: [
-        ["Create", "mdi-plus-outline"],
-        ["Read", "mdi-file-outline"],
-        ["Update", "mdi-update"],
-        ["Delete", "mdi-delete"],
-      ],
+      open: ["Users"]
     };
   },
   computed: {
@@ -129,8 +120,8 @@ export default {
   },
   methods: {
     setActiveTab(item) {
-      this.current_tab = item.url.name;
-      this.$store.dispatch("drawer/setActiveTab", item.url.name);
+      this.current_tab = item.title;
+      this.$store.dispatch("drawer/setActiveTab", item.title);
     },
     logout() {
       localStorage.removeItem("active-tab");

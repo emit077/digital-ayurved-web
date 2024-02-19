@@ -24,7 +24,6 @@ $drawer-background: linear-gradient(195deg, rgb(66, 66, 74), rgb(25, 25, 25));
   .v-list-group--open {
     background: #ffffff0d !important;
     border-radius: 10px !important;
-    padding-bottom: 1px;
   }
   .v-list-item__append {
     color: #ffffff !important;
@@ -56,4 +55,11 @@ $drawer-background: linear-gradient(195deg, rgb(66, 66, 74), rgb(25, 25, 25));
 
 .custom-combobox input {
   width: 100%;
+}
+
+.border-rounded-10{
+  border-radius: 10px;
+}
+.border-rounded-5{
+  border-radius: 5px;
 }
