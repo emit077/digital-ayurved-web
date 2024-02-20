@@ -72,29 +72,6 @@
             @keyup="getFormationList"
           >
           </v-autocomplete>
-          <!-- <v-text-field
-            v-model="form.formulation"
-            :label="$lang.FORMULATION_TYPE"
-            variant="outlined"
-            single-line
-            class="mt-1"
-            shaped
-            density="compact"
-          >
-          </v-text-field> -->
-        </v-col>
-        <v-col cols="12" md="5" :class="!$vuetify.display.mobile ? 'px-4' : ''">
-          <label class="ml-1">{{ $lang.ANUPAAN }}</label>
-          <v-text-field
-            v-model="form.anupaan"
-            :label="$lang.ANUPAAN"
-            variant="outlined"
-            single-line
-            class="mt-1"
-            shaped
-            density="compact"
-          >
-          </v-text-field>
         </v-col>
       </v-row>
       <v-row no-gutters>
@@ -167,9 +144,9 @@ export default defineComponent({
         : "";
 
       form.append("drug_name", this.form.drug_name);
-      form.append("brand", this.form.brand);
+      form.append("brand_table_id", this.form.brand);
       form.append("formula", this.form.formula);
-      form.append("formulation", this.form.formulation);
+      form.append("formulation_table_id", this.form.formulation);
       form.append("anupaan", this.form.anupaan);
 
       const successHandler = (response) => {

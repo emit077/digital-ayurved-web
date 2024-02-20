@@ -78,6 +78,7 @@ export default defineComponent({
   }),
   mounted() {
     this.getData();
+    this.showSnakeBar('success', "Record Deleted")
   },
   methods: {
     getData() {

@@ -217,7 +217,7 @@ const routes = [
         },
         component: () =>
           import(
-            /* webpackChunkName: "inventory" */ "../views/purchase/CreatePurchaseOrder.vue"
+            /* webpackChunkName: "inventory" */ "../views/inventory/purchase/CreatePurchaseOrder.vue"
           ),
       },
       // purchase order
@@ -231,7 +231,7 @@ const routes = [
         },
         component: () =>
           import(
-            /* webpackChunkName: "inventory" */ "../views/purchase/purchaseOrderList.vue"
+            /* webpackChunkName: "inventory" */ "../views/inventory/purchase/purchaseOrderList.vue"
           ),
       },
       // invoice

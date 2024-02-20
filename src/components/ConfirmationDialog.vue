@@ -1,9 +1,11 @@
 <template>
   <div>
+
     <v-dialog
         v-model="flag"
-        activator="parent">
-      <v-card style="width: 400px">
+        width="400px"
+       >
+      <v-card class="border-rounded-10">
         <v-card-text>
           <div class="text-center">
             <v-icon color="red" size="80">mdi-delete-empty</v-icon>
@@ -18,24 +20,23 @@
     </v-dialog>
   </div>
 </template>
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>
 
 <script>
-import {defineComponent} from 'vue';
+import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: 'ConfirmationDialog',
+  name: "ConfirmationDialog",
   props: {
     dialog: {
       type: Object,
-      required: true
+      required: true,
     },
   },
   components: {},
   data: () => ({
-    flag: false
+    flag: false,
   }),
-  methods: {}
+  methods: {},
 });
 </script>

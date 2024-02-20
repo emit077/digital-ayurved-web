@@ -25,7 +25,7 @@ export const state = {
         },
         {
           title: "Purchase",
-          url: { name: "create_purchase_order" },
+          url: { name: "purchase_order" },
           is_active_tab: false,
           icon: "mdi-cart-variant",
         },

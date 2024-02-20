@@ -22,14 +22,14 @@
             link
             @click="setActiveTab(item)"
             v-if="!item.childs"
-          ></v-list-item>
+          />
 
           <v-list-group
             v-else
             :value="item.title"
             color="#fff"
             active-color="#fff"
-            :class="item.title==current_tab?'v-list-group--open':''"
+            :class="item.title == current_tab ? 'v-list-group--open' : ''"
           >
             <template v-slot:activator="{ props }">
               <v-list-item
@@ -38,7 +38,8 @@
                 :title="item.title"
                 :value="item.title"
                 class="my-3 mx-1"
-              ></v-list-item>
+                :ripple="false"
+              />
             </template>
             <v-list-item
               v-for="(obj, i) in item.childs"
@@ -102,7 +103,7 @@ export default {
       loading: false,
       mini: false,
       current_tab: "",
-      open: ["Users"]
+      open: ["Users"],
     };
   },
   computed: {

@@ -17,6 +17,7 @@
               variant="outlined"
               @keyup="getPurchaseOrderList"
               density="compact"
+              class="bg-white"
           ></v-text-field>
         </v-col>
       </v-row>

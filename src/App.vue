@@ -1,9 +1,10 @@
 <template>
   <v-app>
     <!--    <v-main>-->
-    <router-view/>
+    <router-view />
     <!--    </v-main>-->
-    <snake-bar/>
+    <snake-bar />
+
   </v-app>
 </template>
 <style lang="scss">
@@ -11,16 +12,16 @@
 </style>
 
 <script>
-// import SnakeBar from "@/components/dashboard-layout/SnackBar.vue"
-
+import SnakeBar from "@/components/dashboard-layout/SnackBar.vue"
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    // SnakeBar
+    SnakeBar
   },
   data: () => ({
+    snackbar:true
     //
   }),
-}
+};
 </script>
